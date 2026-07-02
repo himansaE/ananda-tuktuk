@@ -1,0 +1,258 @@
+const whatsappNumber = "94770000000";
+
+const whatsappMessage = {
+  en: "Hello, I found your tuk-tuk tour website. I would like to plan a tour around Dambulla or Sigiriya. My pickup location is __ and my date is __.",
+  de: "Hallo, ich habe Ihre Tuk-Tuk-Tour-Website gefunden. Ich moechte eine Tour rund um Dambulla oder Sigiriya planen. Mein Abholort ist __ und mein Datum ist __.",
+  fr: "Bonjour, j'ai trouve votre site de tours en tuk-tuk. Je voudrais organiser une visite autour de Dambulla ou Sigiriya. Mon lieu de prise en charge est __ et ma date est __."
+};
+
+const translations = {
+  en: {
+    brandName: "Embul Ambe Tuk-Tuk Tours",
+    brandArea: "Dambulla, Sigiriya, Pidurangala",
+    navTours: "Tours",
+    navPlaces: "Places",
+    navAbout: "About",
+    navContact: "Contact",
+    heroEyebrow: "Local tuk-tuk driver based in Embul Ambe",
+    heroTitle: "Embul Ambe Tuk-Tuk Tours to Dambulla, Sigiriya & Beyond",
+    heroCopy: "Safe, flexible tuk-tuk tours through Sri Lanka's Cultural Triangle with local pickups near Embul Ambe, Dambulla, Sigiriya, and the Kurunegala road.",
+    ctaPlan: "Plan on WhatsApp",
+    ctaSeeTours: "See tours",
+    trustSafe: "Safe driving",
+    trustSafeText: "Calm routes and careful timing",
+    trustLocal: "Local knowledge",
+    trustLocalText: "Backroads, viewpoints, and village stops",
+    trustFlexible: "Flexible trips",
+    trustFlexibleText: "Sunrise, sunset, half-day, or full-day",
+    trustPickup: "Easy pickup",
+    trustPickupText: "Guesthouses, bus stops, and hotels",
+    toursEyebrow: "Tour options",
+    toursTitle: "Choose a route, then customize it by WhatsApp",
+    toursIntro: "No public price list. Each quote is confirmed privately based on pickup place, time, route, waiting time, and custom stops.",
+    tour1Tag: "Sunrise favorite",
+    tour1Title: "Sigiriya or Pidurangala Sunrise",
+    tour1Text: "Early pickup for sunrise views, quiet roads, and optional breakfast or lake stop after the climb.",
+    tour2Tag: "UNESCO route",
+    tour2Title: "Dambulla Cave Temple Tour",
+    tour2Text: "Visit the historic cave temple complex with relaxed pickup from Embul Ambe, Dambulla, or nearby guesthouses.",
+    tour3Tag: "Full day",
+    tour3Title: "Cultural Triangle Day Tour",
+    tour3Text: "Combine Dambulla, Sigiriya, Pidurangala, Ibbankatuwa, village roads, and scenic local stops in one flexible day.",
+    tour4Tag: "Nature transfer",
+    tour4Title: "Minneriya or Kaudulla Safari Transfer",
+    tour4Text: "Tuk-tuk transfer to safari meeting points with timing support for elephant-viewing seasons and park changes.",
+    placesEyebrow: "Nearby highlights",
+    placesTitle: "World-famous landmarks and quieter local stops",
+    placeSigiriya: "Sigiriya Lion Rock",
+    placeSigiriyaText: "The classic Cultural Triangle landmark for history, gardens, frescoes, and wide views.",
+    placePidurangala: "Pidurangala Rock",
+    placePidurangalaText: "A more adventurous climb often chosen for sunrise and panoramic views of Sigiriya.",
+    placeDambulla: "Dambulla Cave Temple",
+    placeDambullaText: "A must-see cave temple complex close to Dambulla and Embul Ambe pickups.",
+    placeLocal: "Ibbankatuwa, lakes, and village roads",
+    placeLocalText: "Optional quiet stops for travelers who want local history, water views, and countryside breaks.",
+    aboutEyebrow: "Your local driver",
+    aboutTitle: "A practical, friendly way to explore from Embul Ambe",
+    aboutText: "I help guests reach the famous places and the quieter roads around Dambulla and Sigiriya with clear communication, careful driving, and flexible timing. Whether you arrive by bus on the Kurunegala road or stay at a guesthouse near Embul Ambe, I can help plan a route that fits your day.",
+    aboutPoint1: "Clean and comfortable tuk-tuk",
+    aboutPoint2: "Local fruit, tea, lake, and viewpoint stops on request",
+    aboutPoint3: "Sunrise and sunset timing support",
+    reviewsEyebrow: "Guest experience",
+    reviewsTitle: "Built for clear, friendly local service",
+    review1: "\"A flexible local route with enough time for sunrise, temples, food, and quiet stops.\"",
+    review2: "\"Helpful communication by WhatsApp and a relaxed way to see the Cultural Triangle.\"",
+    review3: "\"Good choice for travelers staying around Embul Ambe, Dambulla, or Sigiriya.\"",
+    faqEyebrow: "Travel questions",
+    faqTitle: "Frequently Asked Questions",
+    faq1Title: "What can I visit from Embul Ambe?",
+    faq1Text: "You can visit Dambulla Cave Temple, Sigiriya Lion Rock, Pidurangala Rock, Ibbankatuwa, village lakes, Popham's Arboretum, and safari meeting points for Minneriya or Kaudulla.",
+    faq2Title: "How do I book a tuk-tuk tour?",
+    faq2Text: "Send a WhatsApp message with your travel date, pickup place, start time, and the places you want to visit. The route and quote are confirmed privately.",
+    faq3Title: "Can you pick me up from Dambulla or Sigiriya?",
+    faq3Text: "Yes. Pickup can usually be arranged from Embul Ambe, Dambulla, Sigiriya, nearby guesthouses, hotels, and Kurunegala-Dambulla road bus stops.",
+    faq4Title: "Are entrance tickets included?",
+    faq4Text: "Entrance tickets, safari jeep fees, meals, and guide fees are separate unless agreed in advance on WhatsApp.",
+    contactEyebrow: "Book direct",
+    contactTitle: "Send your date, pickup place, and route idea",
+    contactText: "Message on WhatsApp for a custom quote. Share your hotel or bus stop, preferred time, and the places you want to visit.",
+    contactCta: "Message on WhatsApp"
+  },
+  de: {
+    brandName: "Embul Ambe Tuk-Tuk-Touren",
+    brandArea: "Dambulla, Sigiriya, Pidurangala",
+    navTours: "Touren",
+    navPlaces: "Orte",
+    navAbout: "Ueber mich",
+    navContact: "Kontakt",
+    heroEyebrow: "Lokaler Tuk-Tuk-Fahrer aus Embul Ambe",
+    heroTitle: "Tuk-Tuk-Touren von Embul Ambe nach Dambulla, Sigiriya und mehr",
+    heroCopy: "Sichere und flexible Tuk-Tuk-Touren durch Sri Lankas Cultural Triangle mit Abholung nahe Embul Ambe, Dambulla, Sigiriya und der Kurunegala-Strasse.",
+    ctaPlan: "Auf WhatsApp planen",
+    ctaSeeTours: "Touren ansehen",
+    trustSafe: "Sichere Fahrt",
+    trustSafeText: "Ruhige Routen und gutes Timing",
+    trustLocal: "Lokales Wissen",
+    trustLocalText: "Nebenstrassen, Aussichtspunkte und Dorfstopps",
+    trustFlexible: "Flexible Trips",
+    trustFlexibleText: "Sonnenaufgang, Sonnenuntergang, Halbtag oder Ganztag",
+    trustPickup: "Einfache Abholung",
+    trustPickupText: "Gaestehaeuser, Bushaltestellen und Hotels",
+    toursEyebrow: "Touren",
+    toursTitle: "Route waehlen und per WhatsApp anpassen",
+    toursIntro: "No public price list. Jede Anfrage wird privat bestaetigt, je nach Abholort, Zeit, Route, Wartezeit und Extra-Stopps.",
+    tour1Tag: "Sonnenaufgang",
+    tour1Title: "Sigiriya oder Pidurangala bei Sonnenaufgang",
+    tour1Text: "Fruehe Abholung fuer Morgenlicht, ruhige Strassen und optionalen Fruehstuecks- oder Seestopp nach dem Aufstieg.",
+    tour2Tag: "UNESCO-Route",
+    tour2Title: "Dambulla Cave Temple Tour",
+    tour2Text: "Besuchen Sie den historischen Hoehlentempel mit entspannter Abholung in Embul Ambe, Dambulla oder nahen Gaestehaeusern.",
+    tour3Tag: "Ganzer Tag",
+    tour3Title: "Cultural Triangle Day Tour",
+    tour3Text: "Kombinieren Sie Dambulla, Sigiriya, Pidurangala, Ibbankatuwa, Dorfstrassen und schoene lokale Stopps an einem flexiblen Tag.",
+    tour4Tag: "Naturtransfer",
+    tour4Title: "Minneriya oder Kaudulla Safari Transfer",
+    tour4Text: "Tuk-Tuk-Transfer zu Safari-Treffpunkten mit Timing-Hilfe fuer Elefantensaisons und Parkwechsel.",
+    placesEyebrow: "Highlights in der Naehe",
+    placesTitle: "Beruehmte Orte und ruhigere lokale Stopps",
+    placeSigiriya: "Sigiriya Lion Rock",
+    placeSigiriyaText: "Der klassische Cultural-Triangle-Ort fuer Geschichte, Gaerten, Fresken und weite Aussichten.",
+    placePidurangala: "Pidurangala Rock",
+    placePidurangalaText: "Ein abenteuerlicherer Aufstieg, beliebt fuer Sonnenaufgang und den Blick auf Sigiriya.",
+    placeDambulla: "Dambulla Cave Temple",
+    placeDambullaText: "Ein wichtiger Hoehlentempel nahe Dambulla und Embul-Ambe-Abholungen.",
+    placeLocal: "Ibbankatuwa, Seen und Dorfstrassen",
+    placeLocalText: "Ruhige optionale Stopps fuer Reisende, die lokale Geschichte, Wasserblicke und Landschaft erleben moechten.",
+    aboutEyebrow: "Ihr lokaler Fahrer",
+    aboutTitle: "Praktisch und freundlich ab Embul Ambe unterwegs",
+    aboutText: "Ich helfe Gaesten, die beruehmten Orte und die ruhigeren Strassen rund um Dambulla und Sigiriya zu erreichen, mit klarer Kommunikation, vorsichtiger Fahrt und flexibler Zeitplanung. Wenn Sie mit dem Bus auf der Kurunegala-Strasse ankommen oder nahe Embul Ambe wohnen, plane ich eine passende Route.",
+    aboutPoint1: "Sauberes und bequemes Tuk-Tuk",
+    aboutPoint2: "Stopps fuer Obst, Tee, See und Aussicht auf Wunsch",
+    aboutPoint3: "Hilfe beim Timing fuer Sonnenaufgang und Sonnenuntergang",
+    reviewsEyebrow: "Gaesteerlebnis",
+    reviewsTitle: "Klarer, freundlicher lokaler Service",
+    review1: "\"Eine flexible lokale Route mit genug Zeit fuer Sonnenaufgang, Tempel, Essen und ruhige Stopps.\"",
+    review2: "\"Hilfreiche Kommunikation per WhatsApp und eine entspannte Art, das Cultural Triangle zu sehen.\"",
+    review3: "\"Gute Wahl fuer Reisende rund um Embul Ambe, Dambulla oder Sigiriya.\"",
+    faqEyebrow: "Reisefragen",
+    faqTitle: "Haeufige Fragen",
+    faq1Title: "Was kann ich von Embul Ambe aus besuchen?",
+    faq1Text: "Sie koennen den Dambulla Cave Temple, Sigiriya Lion Rock, Pidurangala Rock, Ibbankatuwa, Dorfseen, Popham's Arboretum und Safari-Treffpunkte fuer Minneriya oder Kaudulla besuchen.",
+    faq2Title: "Wie buche ich eine Tuk-Tuk-Tour?",
+    faq2Text: "Senden Sie per WhatsApp Reisedatum, Abholort, Startzeit und gewuenschte Orte. Route und Angebot werden privat bestaetigt.",
+    faq3Title: "Koennen Sie mich in Dambulla oder Sigiriya abholen?",
+    faq3Text: "Ja. Abholung ist normalerweise in Embul Ambe, Dambulla, Sigiriya, nahen Gaestehaeusern, Hotels und an Bushaltestellen der Kurunegala-Dambulla-Strasse moeglich.",
+    faq4Title: "Sind Eintrittskarten enthalten?",
+    faq4Text: "Eintrittskarten, Safari-Jeep-Gebuehren, Mahlzeiten und Guide-Gebuehren sind separat, sofern nichts anderes per WhatsApp vereinbart wurde.",
+    contactEyebrow: "Direkt buchen",
+    contactTitle: "Senden Sie Datum, Abholort und Routenidee",
+    contactText: "Schreiben Sie per WhatsApp fuer ein persoenliches Angebot. Teilen Sie Hotel oder Bushaltestelle, Wunschzeit und Orte mit.",
+    contactCta: "Auf WhatsApp schreiben"
+  },
+  fr: {
+    brandName: "Tours en tuk-tuk a Embul Ambe",
+    brandArea: "Dambulla, Sigiriya, Pidurangala",
+    navTours: "Tours",
+    navPlaces: "Lieux",
+    navAbout: "A propos",
+    navContact: "Contact",
+    heroEyebrow: "Chauffeur local de tuk-tuk base a Embul Ambe",
+    heroTitle: "Tours en tuk-tuk d'Embul Ambe vers Dambulla, Sigiriya et plus",
+    heroCopy: "Des tours en tuk-tuk surs et flexibles dans le Triangle culturel du Sri Lanka, avec prise en charge pres d'Embul Ambe, Dambulla, Sigiriya et la route de Kurunegala.",
+    ctaPlan: "Planifier sur WhatsApp",
+    ctaSeeTours: "Voir les tours",
+    trustSafe: "Conduite sure",
+    trustSafeText: "Routes calmes et horaires bien choisis",
+    trustLocal: "Connaissance locale",
+    trustLocalText: "Petites routes, points de vue et villages",
+    trustFlexible: "Trajets flexibles",
+    trustFlexibleText: "Lever du soleil, coucher du soleil, demi-journee ou journee complete",
+    trustPickup: "Prise en charge facile",
+    trustPickupText: "Guesthouses, arrets de bus et hotels",
+    toursEyebrow: "Options de tour",
+    toursTitle: "Choisissez une route, puis personnalisez sur WhatsApp",
+    toursIntro: "No public price list. Chaque devis est confirme en prive selon le lieu de prise en charge, l'heure, la route, l'attente et les arrets.",
+    tour1Tag: "Lever du soleil",
+    tour1Title: "Lever du soleil a Sigiriya ou Pidurangala",
+    tour1Text: "Prise en charge tot le matin pour les vues, les routes calmes, puis option petit dejeuner ou arret au lac apres la montee.",
+    tour2Tag: "Route UNESCO",
+    tour2Title: "Tour du Dambulla Cave Temple",
+    tour2Text: "Visitez le temple historique dans les grottes avec prise en charge simple a Embul Ambe, Dambulla ou dans les guesthouses voisines.",
+    tour3Tag: "Journee complete",
+    tour3Title: "Cultural Triangle Day Tour",
+    tour3Text: "Combinez Dambulla, Sigiriya, Pidurangala, Ibbankatuwa, les routes de village et les beaux arrets locaux en une journee flexible.",
+    tour4Tag: "Transfert nature",
+    tour4Title: "Transfert safari Minneriya ou Kaudulla",
+    tour4Text: "Transfert en tuk-tuk vers les points de rendez-vous safari, avec aide pour les saisons des elephants et les changements de parc.",
+    placesEyebrow: "Sites proches",
+    placesTitle: "Grands monuments et arrets locaux plus calmes",
+    placeSigiriya: "Sigiriya Lion Rock",
+    placeSigiriyaText: "Le grand classique du Triangle culturel pour l'histoire, les jardins, les fresques et les vues.",
+    placePidurangala: "Pidurangala Rock",
+    placePidurangalaText: "Une montee plus aventureuse, souvent choisie pour le lever du soleil et la vue sur Sigiriya.",
+    placeDambulla: "Dambulla Cave Temple",
+    placeDambullaText: "Un temple dans les grottes incontournable, proche de Dambulla et des prises en charge a Embul Ambe.",
+    placeLocal: "Ibbankatuwa, lacs et routes de village",
+    placeLocalText: "Des arrets calmes pour les voyageurs qui veulent histoire locale, vues sur l'eau et campagne.",
+    aboutEyebrow: "Votre chauffeur local",
+    aboutTitle: "Une facon simple et amicale d'explorer depuis Embul Ambe",
+    aboutText: "J'aide les voyageurs a rejoindre les lieux connus et les routes plus calmes autour de Dambulla et Sigiriya, avec une communication claire, une conduite prudente et des horaires flexibles. Si vous arrivez en bus sur la route de Kurunegala ou dormez pres d'Embul Ambe, je peux organiser une route adaptee.",
+    aboutPoint1: "Tuk-tuk propre et confortable",
+    aboutPoint2: "Arrets fruits, the, lac et points de vue sur demande",
+    aboutPoint3: "Aide pour les horaires de lever et coucher du soleil",
+    reviewsEyebrow: "Experience client",
+    reviewsTitle: "Un service local clair et amical",
+    review1: "\"Une route locale flexible avec assez de temps pour le lever du soleil, les temples, le repas et les arrets calmes.\"",
+    review2: "\"Communication utile sur WhatsApp et une facon detendue de voir le Triangle culturel.\"",
+    review3: "\"Bon choix pour les voyageurs a Embul Ambe, Dambulla ou Sigiriya.\"",
+    faqEyebrow: "Questions de voyage",
+    faqTitle: "Questions frequentes",
+    faq1Title: "Que visiter depuis Embul Ambe ?",
+    faq1Text: "Vous pouvez visiter le Dambulla Cave Temple, Sigiriya Lion Rock, Pidurangala Rock, Ibbankatuwa, les lacs de village, Popham's Arboretum et les points de depart safari pour Minneriya ou Kaudulla.",
+    faq2Title: "Comment reserver un tour en tuk-tuk ?",
+    faq2Text: "Envoyez un message WhatsApp avec votre date, lieu de prise en charge, heure de depart et lieux souhaites. La route et le devis sont confirmes en prive.",
+    faq3Title: "Pouvez-vous venir me chercher a Dambulla ou Sigiriya ?",
+    faq3Text: "Oui. La prise en charge est souvent possible a Embul Ambe, Dambulla, Sigiriya, dans les guesthouses proches, les hotels et les arrets de bus de la route Kurunegala-Dambulla.",
+    faq4Title: "Les billets d'entree sont-ils inclus ?",
+    faq4Text: "Les billets d'entree, frais de jeep safari, repas et guides sont separes sauf accord different sur WhatsApp.",
+    contactEyebrow: "Reservation directe",
+    contactTitle: "Envoyez votre date, lieu de prise en charge et idee de route",
+    contactText: "Envoyez un message WhatsApp pour un devis personnalise. Indiquez votre hotel ou arret de bus, l'heure souhaitee et les lieux a visiter.",
+    contactCta: "Message sur WhatsApp"
+  }
+};
+
+function whatsappUrl(language) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage[language] || whatsappMessage.en)}`;
+}
+
+function applyLanguage(language) {
+  const dictionary = translations[language] || translations.en;
+
+  document.documentElement.lang = language;
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
+    if (dictionary[key]) {
+      element.textContent = dictionary[key];
+    }
+  });
+
+  document.querySelectorAll(".language-button").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.lang === language);
+  });
+
+  document.querySelectorAll(".whatsapp-link").forEach((link) => {
+    link.href = whatsappUrl(language);
+  });
+
+  localStorage.setItem("preferredLanguage", language);
+}
+
+document.querySelectorAll(".language-button").forEach((button) => {
+  button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+});
+
+applyLanguage(localStorage.getItem("preferredLanguage") || "en");
+
+
