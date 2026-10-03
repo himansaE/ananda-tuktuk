@@ -1,79 +1,51 @@
 "use client";
-import React, { useState } from "react";
+
+import { useEffect } from "react";
 import Link from "next/link";
+import { SectionLink } from "./SectionLink";
 import { usePathname } from "next/navigation";
+import { IconArrowUpRight, IconMenu2, IconX } from "@tabler/icons-react";
+import { useSheet } from "./useSheet";
+
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Explore", href: "/tours" },
+  { label: "About me", href: "/about" },
+  { label: "Arrange a ride", href: "/contact" },
+];
+
+export function Brand({ linked = true }: { linked?: boolean }) {
+  const mark = <><span className="brand-mark" aria-hidden="true">🛺</span><span className="brand-name">Ananda&apos;s<span>tuk-tuk rides · Sri Lanka</span></span></>;
+  return linked ? <Link className="brand" href="/">{mark}<span className="sr-only">Home</span></Link> : <span className="brand">{mark}</span>;
+}
 
 export function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
-  const isActive = (path: string) => pathname === path;
-
-  return (
-    <nav className="fixed top-0 w-full z-50 bg-surface/80 dark:bg-primary-container/80 backdrop-blur-md border-0 transition-all duration-300">
-      <div className="flex justify-between items-center max-w-[1280px] mx-auto px-6 md:px-16 h-20">
-        <Link className="text-headline-lg font-extrabold text-primary dark:text-primary-fixed-dim tracking-tight" href="/">
-          Ananda&apos;s Tuk Ride
-        </Link>
-        
-        <div className="hidden md:flex gap-8 items-center">
-          <Link 
-            className={`text-label-md uppercase tracking-wider ${
-              isActive("/tours") 
-                ? "text-primary border-b-2 border-primary pb-1" 
-                : "text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors"
-            }`} 
-            href="/tours"
-          >
-            Trips
-          </Link>
-          <Link 
-            className={`text-label-md uppercase tracking-wider ${
-              isActive("/about") 
-                ? "text-primary border-b-2 border-primary pb-1" 
-                : "text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors"
-            }`} 
-            href="/about"
-          >
-            About Ananda
-          </Link>
-          <Link 
-            className={`text-label-md uppercase tracking-wider ${
-              isActive("/contact") 
-                ? "text-primary border-b-2 border-primary pb-1" 
-                : "text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors"
-            }`} 
-            href="/contact"
-          >
-            Contact
-          </Link>
-        </div>
-
-        <Link 
-          className="hidden md:block bg-primary-container text-on-primary-container px-8 py-3.5 rounded-full text-label-md uppercase tracking-wider hover:scale-105 hover:bg-primary hover:text-white transition-all duration-300 text-center" 
-          href="/contact"
-        >
-          Book Adventure
-        </Link>
-
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-primary flex items-center">
-          <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-            {isOpen ? "close" : "menu"}
-          </span>
-        </button>
+  const { ref, open, close } = useSheet();
+  useEffect(() => {
+    const wide = window.matchMedia("(min-width: 900px)");
+    const onChange = () => { if (wide.matches) ref.current?.close(); };
+    wide.addEventListener("change", onChange);
+    return () => wide.removeEventListener("change", onChange);
+  }, [ref]);
+  return <>
+    <header className="site-header">
+      <nav className="nav-shell" aria-label="Main navigation">
+        <Brand />
+        <ul className="desktop-nav">
+          {links.slice(0, 3).map((link) => <li key={link.href}><Link href={link.href} aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link></li>)}
+        </ul>
+        <SectionLink className="btn-brand nav-cta" href="/contact#plan">Plan a ride<IconArrowUpRight size={17} aria-hidden="true" /></SectionLink>
+        <button className="icon-button menu-trigger" onClick={(event) => open(event.detail !== 0)} aria-haspopup="dialog" aria-controls="site-menu" aria-label="Open menu"><IconMenu2 size={23} aria-hidden="true" /></button>
+      </nav>
+    </header>
+    <dialog ref={ref} id="site-menu" className="sheet menu-sheet" aria-labelledby="menu-title" onCancel={(event) => { event.preventDefault(); close(false); }} onClick={(event) => { if (event.target === event.currentTarget) close(); }}>
+      <div className="sheet-panel menu-panel">
+        <div className="sheet-top"><span id="menu-title" className="eyebrow">Where shall we go?</span><button className="icon-button" aria-label="Close menu" onClick={(event) => close(event.detail !== 0)} autoFocus><IconX size={22} aria-hidden="true" /></button></div>
+        <nav aria-label="Mobile navigation" className="mobile-nav">
+          {links.map((link, index) => <Link style={{ "--link-index": index } as React.CSSProperties} key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined} onClick={() => close(false)}>{link.label}<IconArrowUpRight size={22} aria-hidden="true" /></Link>)}
+        </nav>
       </div>
-
-      {/* Mobile Drawer Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-surface dark:bg-primary-container border-t border-surface-variant/30 py-6 px-6 flex flex-col gap-6 text-label-md uppercase tracking-wider transition-all duration-300">
-          <Link onClick={() => setIsOpen(false)} className={`text-primary dark:text-primary-fixed-dim ${isActive("/tours") ? "underline" : ""}`} href="/tours">Trips</Link>
-          <Link onClick={() => setIsOpen(false)} className={`text-on-surface-variant dark:text-surface-variant ${isActive("/about") ? "underline" : ""}`} href="/about">About Ananda</Link>
-          <Link onClick={() => setIsOpen(false)} className={`text-on-surface-variant dark:text-surface-variant ${isActive("/contact") ? "underline" : ""}`} href="/contact">Contact</Link>
-          <Link onClick={() => setIsOpen(false)} className="bg-primary-container text-on-primary-container px-6 py-4 rounded-full text-center" href="/contact">
-            Book Adventure
-          </Link>
-        </div>
-      )}
-    </nav>
-  );
+    </dialog>
+  </>;
 }

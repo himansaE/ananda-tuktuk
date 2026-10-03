@@ -1,96 +1,117 @@
 "use client";
 import React, { useRef } from "react";
-import Image from "next/image";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { IconLanguage, IconShieldCheck, IconAdjustments, IconMapPin, IconCalendarEvent, IconArrowRight } from "@tabler/icons-react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const FEATURES = [
+  { icon: IconLanguage, title: "I speak your language", body: "English, yes — but also the language of a relaxed, unhurried journey. No scripts, just real conversation." },
+  { icon: IconShieldCheck, title: "You're in safe hands", body: "My tuk-tuk is maintained daily. I drive carefully, I know the roads, and I take zero risks with my passengers." },
+  { icon: IconAdjustments, title: "Your trip, your way", body: "Want to stop for a coconut? Stay longer at the temple? Change the plan entirely? Fine by me." },
+];
+
+const STEPS = [
+  { step: "01", icon: IconMapPin, label: "Pick your stops", desc: "Choose from my favourite spots or mix your own." },
+  { step: "02", icon: IconCalendarEvent, label: "Tell me when", desc: "Let me know your dates and how much time you have." },
+  { step: "03", icon: IconArrowRight, label: "WhatsApp me", desc: "Send your plan directly. No forms, no delays." },
+  { step: "04", icon: IconArrowRight, label: "We ride", desc: "I'll be there. Adventure starts on time." },
+];
 
 export function Ride() {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Parallax on the circular tuk-tuk rear view
-    gsap.to(".ride-tuk-img", {
-      yPercent: -15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".ride-tuk-wrap",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      }
-    });
+    const mm = gsap.matchMedia();
 
-    // Reveal animations
-    gsap.fromTo(".gsap-reveal-ride", 
-      { y: 30, opacity: 0, filter: "blur(4px)" },
-      { 
-        y: 0, 
-        opacity: 1, 
-        filter: "blur(0px)",
-        duration: 1, 
-        ease: "power3.out", 
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-        }
+    mm.add(
+      { reduceMotion: "(prefers-reduced-motion: reduce)" },
+      (ctx) => {
+        const { reduceMotion } = ctx.conditions!;
+        const dur = (d: number) => (reduceMotion ? 0 : d);
+
+        /* Header */
+        gsap.fromTo(
+          ".ride-header",
+          { y: 26, opacity: 0, filter: "blur(8px)" },
+          {
+            y: 0, opacity: 1, filter: "blur(0px)", duration: dur(0.85),
+            scrollTrigger: { trigger: container.current, start: "top 85%", once: true },
+          }
+        );
+
+        /* Feature cards — batch */
+        const cards = Array.from(container.current!.querySelectorAll(".ride-card"));
+        gsap.set(cards, { opacity: 0, y: 44, filter: "blur(10px)" });
+        ScrollTrigger.batch(cards, {
+          onEnter: (els) =>
+            gsap.to(els, {
+              opacity: 1, y: 0, filter: "blur(0px)",
+              duration: dur(0.85), ease: "power3.out", stagger: { each: 0.13 }, overwrite: true,
+            }),
+          start: "top 84%",
+          once: true,
+        });
+
+        /* Step cards — batch */
+        const steps = Array.from(container.current!.querySelectorAll(".step-card"));
+        gsap.set(steps, { opacity: 0, y: 32 });
+        ScrollTrigger.batch(steps, {
+          onEnter: (els) =>
+            gsap.to(els, {
+              opacity: 1, y: 0,
+              duration: dur(0.7), ease: "power3.out", stagger: { each: 0.1 }, overwrite: true,
+            }),
+          start: "top 86%",
+          once: true,
+        });
       }
     );
   }, { scope: container });
 
   return (
-    <section className="py-32 bg-surface-container-low px-6 md:px-16 relative overflow-hidden">
-      <div ref={container} className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        {/* Left Side: Ride Details */}
-        <div className="col-span-1 lg:col-span-6">
-          <span className="gsap-reveal-ride text-label-md inline-block text-secondary tracking-widest uppercase mb-4">
-            The Ride
-          </span>
-          <h2 className="gsap-reveal-ride text-headline-xl font-bold text-primary mb-8 leading-tight">
-            Adventure on Three Wheels
-          </h2>
-          <p className="gsap-reveal-ride text-body-lg text-on-surface-variant mb-12 leading-relaxed">
-            Travel in authentic Sri Lankan style. The iconic red tuk-tuk is meticulously maintained, ensuring a clean, safe, and wildly fun ride. It&apos;s the perfect balance of open-air excitement and reliable transport.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            <div className="gsap-reveal-ride bg-surface p-8 rounded-2xl border border-surface-variant/40 hover:-translate-y-1 transition-transform duration-300">
-              <div className="bg-secondary-container/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 text-primary">
-                <span className="material-symbols-outlined text-3xl text-secondary">verified</span>
-              </div>
-              <h3 className="text-headline-lg font-bold text-primary mb-3">Immaculate</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                Cleaned daily inside and out for your comfort.
-              </p>
-            </div>
-            <div className="gsap-reveal-ride bg-surface p-8 rounded-2xl border border-surface-variant/40 hover:-translate-y-1 transition-transform duration-300">
-              <div className="bg-secondary-container/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 text-primary">
-                <span className="material-symbols-outlined text-3xl text-secondary">shield</span>
-              </div>
-              <h3 className="text-headline-lg font-bold text-primary mb-3">Safe &amp; Secure</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                Regularly serviced and inspected thoroughly.
-              </p>
-            </div>
-          </div>
+    <section ref={container} className="section-pad bg-[var(--color-surface)]">
+      <div className="container-page">
+        {/* Personal section header */}
+        <div className="ride-header max-w-xl mb-14">
+          <span className="type-label text-[var(--color-brand)] block mb-3">Why ride with me?</span>
+          <h2 className="type-title text-[var(--color-ink)]">Three things I genuinely care about.</h2>
         </div>
 
-        {/* Right Side: Tuk-Tuk Image */}
-        <div className="col-span-1 lg:col-span-5 lg:col-start-8 relative mt-16 lg:mt-0 ride-tuk-wrap flex justify-center">
-          <div className="absolute inset-0 bg-primary/10 rounded-full blur-[80px] -z-10" />
-          <div className="relative w-full aspect-square overflow-hidden rounded-full border-[12px] border-surface max-w-md">
-            <Image 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB80rJuMX3lOIlpPiDsWABQGeUNOXfp9AY4bGz05Jt-NZVgfkTcVLKlLRpPlyuVFTh_hCjLtuGVOejR5YMiNfI1mLvi-gj71ehHKQWotij4gS9VhbcyA12sB8eRp-Y1ls4e13NhTW18bf6a3TP1SG0sct_PNpJCafVHokUC7jxfKsjBj4taulHU6s0iy-xE7tUdcEAh86JzcXww8sHLx1gYY7Om88vYLRoJwslblmOVakytWxiUl-rqdBxsAvZLoL1_vw" 
-              alt="Rear of Red Tuk-Tuk"
-              fill
-              priority
-              className="ride-tuk-img object-cover scale-110"
-            />
-          </div>
+        {/* Feature cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+          {FEATURES.map(({ icon: Icon, title, body }) => (
+            <div key={title} className="ride-card card p-8 group hover:-translate-y-1.5 transition-transform duration-300">
+              <div className="icon-wrap mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Icon size={22} strokeWidth={1.5} className="text-[var(--color-brand)]" />
+              </div>
+              <h3 className="type-subtitle text-[var(--color-ink)] font-bold mb-3">{title}</h3>
+              <p className="type-body text-[var(--color-ink-soft)] leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* How it works */}
+        <div className="ride-header border-t border-[var(--color-border)] pt-16 mb-10">
+          <h3 className="type-subtitle text-[var(--color-ink)] font-bold mb-1">How it works</h3>
+          <p className="type-body text-[var(--color-ink-soft)]">Four steps. That&apos;s all it takes.</p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {STEPS.map(({ step, icon: Icon, label, desc }, i) => (
+            <div key={step} className="step-card relative bg-white rounded-2xl border border-[var(--color-border)] p-6 flex flex-col items-start">
+              <span className="type-label text-[var(--color-brand)] mb-3 block" style={{ fontSize: "10px", letterSpacing: "0.14em" }}>
+                {step}
+              </span>
+              <div className="icon-wrap mb-4" style={{ width: 36, height: 36 }}>
+                <Icon size={18} strokeWidth={1.5} className="text-[var(--color-brand)]" />
+              </div>
+              <h4 className="type-subtitle text-[var(--color-ink)] font-bold mb-2" style={{ fontSize: "0.9rem" }}>{label}</h4>
+              <p className="type-caption text-[var(--color-ink-muted)] leading-relaxed">{desc}</p>
+              {/* Connector */}
+              {i < STEPS.length - 1 && (
+                <div className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-[var(--color-border)] z-10" />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

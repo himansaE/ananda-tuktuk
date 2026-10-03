@@ -1,71 +1,37 @@
+import Link from "next/link";
+import { IconArrowUpRight, IconPhone, IconBrandWhatsapp } from "@tabler/icons-react";
+import { contactPhone, enquiryLink, whatsappPhone } from "@/lib/site-config";
+import { SectionLink } from "./SectionLink";
+
+function phoneLabel(phone: string) {
+  return phone.startsWith("94") && phone.length === 11
+    ? `+94 ${phone.slice(2, 4)} ${phone.slice(4, 7)} ${phone.slice(7)}`
+    : `+${phone}`;
+}
+
 export function Footer() {
-  return (
-    <footer className="bg-primary dark:bg-inverse-surface w-full py-20 mt-12">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-[1280px] mx-auto px-6 md:px-16">
-        {/* About column */}
-        <div className="col-span-1 md:col-span-2 mb-8 md:mb-0 pr-8">
-          <span className="font-display text-3xl font-extrabold text-secondary-fixed block mb-6 uppercase tracking-tight">
-            Ananda&apos;s Tuk Ride
-          </span>
-          <p className="font-sans text-lg text-on-primary dark:text-inverse-on-surface opacity-90 max-w-md leading-relaxed">
-            Guided by Passion, Driven by Heart. Experience the true essence of Sri Lanka with a local who cares.
-          </p>
-          <div className="mt-8">
-            <p className="font-sans text-sm text-on-primary/70">
-              © {new Date().getFullYear()} Ananda&apos;s Tuk Ride. All rights reserved.
-            </p>
-          </div>
+  return <footer className="site-footer">
+    <div className="container-page">
+      <div className="footer-main">
+        <div className="footer-intro">
+          <Link href="/" className="footer-brand">Ananda&apos;s<br /><em>tuk-tuk.</em></Link>
+          <p>I&apos;m your local driver around<br />Dambulla &amp; Sigiriya.</p>
+          <SectionLink href="/contact#plan" className="btn-brand footer-cta">Plan a ride<IconArrowUpRight size={18} aria-hidden="true" /></SectionLink>
         </div>
-
-        {/* Explore column */}
-        <div className="col-span-1">
-          <h4 className="font-bold text-lg text-secondary-fixed mb-6 uppercase tracking-wider">Explore</h4>
-          <ul className="space-y-4">
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Local Customs
-              </a>
-            </li>
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Safety Guide
-              </a>
-            </li>
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Sri Lanka Travel Tips
-              </a>
-            </li>
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Ananda&apos;s Blog
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Connect column */}
-        <div className="col-span-1">
-          <h4 className="font-bold text-lg text-secondary-fixed mb-6 uppercase tracking-wider">Connect</h4>
-          <ul className="space-y-4">
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Contact Us
-              </a>
-            </li>
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Book a Ride
-              </a>
-            </li>
-            <li>
-              <a className="font-sans text-on-primary/80 hover:text-white transition-colors hover:translate-x-2 inline-block duration-300" href="#">
-                Privacy Policy
-              </a>
-            </li>
-          </ul>
+        <nav className="footer-links" aria-labelledby="footer-explore-title">
+          <h2 id="footer-explore-title" className="footer-heading">Explore</h2>
+          <Link href="/">Home</Link>
+          <Link href="/tours">Places &amp; stops</Link>
+          <Link href="/about">About me</Link>
+          <Link href="/contact">Arrange a ride</Link>
+        </nav>
+        <div className="footer-contact">
+          <h2 className="footer-heading">Talk to me</h2>
+          {enquiryLink && whatsappPhone && <a href={enquiryLink} target="_blank" rel="noopener noreferrer" className="footer-contact-link"><IconBrandWhatsapp size={20} aria-hidden="true" /><span><span className="footer-contact-label">WhatsApp me</span><span className="footer-contact-number">{phoneLabel(whatsappPhone)}</span></span></a>}
+          {contactPhone && <a href={`tel:+${contactPhone}`} className="footer-contact-link"><IconPhone size={20} aria-hidden="true" /><span><span className="footer-contact-label">Call me</span><span className="footer-contact-number">{phoneLabel(contactPhone)}</span></span></a>}
         </div>
       </div>
-    </footer>
-  );
+      <div className="footer-bottom"><p>© {new Date().getFullYear()} Ananda&apos;s Tuk-Tuk</p><p>Hotel pickup · Waiting · Ride back</p></div>
+    </div>
+  </footer>;
 }

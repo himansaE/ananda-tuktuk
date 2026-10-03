@@ -1,114 +1,50 @@
 "use client";
-import React, { useState } from "react";
-import { MessageCircle } from "lucide-react";
 
-export function Planner() {
-  const [destinations, setDestinations] = useState<string[]>([]);
-  const [pickup, setPickup] = useState("Dambulla");
+import { useEffect, useState, type FormEvent } from "react";
+import { SectionLink as Link } from "./SectionLink";
+import { IconCheck as Check, IconBrandWhatsapp as MessageCircle, IconPhone as Phone, IconX as X, IconMapPin, IconClock, IconArrowBackUp } from "@tabler/icons-react";
+import { stops } from "@/lib/content";
+import { buildRideMessage, createWhatsAppLink, rideTypes, sriLankaDate, type RideDraft } from "@/lib/ride";
+import { contactPhone, contactPhoneLabel, whatsappPhone } from "@/lib/site-config";
+import { useRide } from "./RideProvider";
 
-  const toggleDest = (d: string) => {
-    if (destinations.includes(d)) {
-      setDestinations(destinations.filter((x) => x !== d));
-    } else {
-      setDestinations([...destinations, d]);
-    }
-  };
+export function Planner({ initialRide }: { initialRide?: RideDraft["rideType"] }) {
+  const { selected, draft: details, updateDraft, toggleStop, clearStops } = useRide();
+  useEffect(() => {
+    if (initialRide) updateDraft({ rideType: initialRide });
+  }, [initialRide, updateDraft]);
+  const [status, setStatus] = useState("");
+  const chosen = selected.map((id) => stops.find((stop) => stop.id === id)).filter((stop) => stop !== undefined);
+  const message = buildRideMessage({ ...details, stops: chosen.map((stop) => stop.title) });
+  const whatsapp = createWhatsAppLink(whatsappPhone ?? "", message);
 
-  const getWhatsAppLink = () => {
-    const destString = destinations.length > 0 ? destinations.join(", ") : "a custom tour";
-    const msg = `Hello Ananda! I would like to book a tuk-tuk tour.\n\nPickup: ${pickup}\nDestinations: ${destString}\n\nPlease let me know the availability and price.`;
-    return `https://wa.me/94770000000?text=${encodeURIComponent(msg)}`;
-  };
+  function change<Field extends keyof RideDraft>(field: Field, value: RideDraft[Field]) {
+    updateDraft({ [field]: value });
+    setStatus("");
+  }
 
-  return (
-    <section className="py-40 px-6 md:px-12 bg-primary text-on-primary relative z-30">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
-          <h2 className="text-[12vw] md:text-[8rem] font-display font-black tracking-tighter leading-[0.85] uppercase">
-            Plan the<br />Route
-          </h2>
-          <p className="text-[10px] md:text-xs text-on-primary/60 font-mono tracking-[0.2em] uppercase max-w-xs leading-relaxed">
-            Select your stops and send the itinerary directly to Ananda&apos;s WhatsApp. No upfront payment required.
-          </p>
-        </div>
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (whatsapp) {
+      window.open(whatsapp, "_blank", "noopener,noreferrer");
+      setStatus("Your request is ready in WhatsApp. Send it in the chat and I'll reply to you.");
+    } else setStatus("WhatsApp is unavailable right now. Please call me to arrange your ride.");
+  }
 
-        <div className="grid md:grid-cols-[1fr_400px] gap-20">
-          <div className="space-y-20">
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-secondary-fixed-dim mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-secondary-fixed-dim" /> Destinations
-              </h3>
-              <div className="flex flex-wrap gap-4">
-                {["Sigiriya Rock", "Pidurangala Sunrise", "Dambulla Cave Temple", "Minneriya Safari", "Kaudulla Safari", "Village Lake Tour", "Ibbankatuwa Tombs"].map((d) => (
-                  <button
-                    key={d}
-                    onClick={() => toggleDest(d)}
-                    className={`px-6 py-4 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-500 border ${
-                      destinations.includes(d)
-                        ? "bg-secondary border-secondary text-white"
-                        : "bg-transparent border-on-primary/20 text-on-primary/60 hover:border-on-primary hover:text-on-primary"
-                    }`}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-secondary-fixed-dim mb-8 flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-secondary-fixed-dim" /> Pickup Location
-              </h3>
-              <div className="flex flex-wrap gap-4">
-                {["Embul Ambe", "Dambulla", "Sigiriya", "Kandalama", "Other (Custom)"].map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPickup(p)}
-                    className={`px-6 py-4 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-500 border ${
-                      pickup === p
-                        ? "bg-on-primary border-on-primary text-primary"
-                        : "bg-transparent border-on-primary/20 text-on-primary/60 hover:border-on-primary hover:text-on-primary"
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t pt-12 md:pt-0 md:border-t-0 md:border-l border-on-primary/10 pl-0 md:pl-20 flex flex-col justify-between">
-            <div>
-              <h3 className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-mono text-on-primary/40 mb-12">Trip Summary</h3>
-              
-              <div className="space-y-12">
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-secondary-fixed-dim mb-3">Pickup</div>
-                  <div className="text-xl md:text-2xl font-bold uppercase tracking-tight leading-none">{pickup}</div>
-                </div>
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-secondary-fixed-dim mb-3">Stops</div>
-                  <div className="text-base md:text-lg font-bold uppercase tracking-tight leading-relaxed text-on-primary/80">
-                    {destinations.length > 0 ? destinations.join(", ") : "None selected"}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-20">
-              <a
-                href={getWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#25D366] text-white font-bold text-xs uppercase tracking-[0.2em] px-8 py-6 flex items-center justify-center gap-4 hover:bg-[#20bd5a] transition-colors"
-              >
-                <MessageCircle size={20} />
-                WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <section id="plan" className="planner-section section-space cinema-ui" aria-labelledby="planner-title"><div className="container-page planner-layout">
+    <div className="planner-intro"><div className="planner-welcome"><h2 id="planner-title" className="type-display">Your <em>ride.</em></h2><p>Pick your stops, or ask me for ideas.</p></div><div className="planner-practical"><ul className="planner-assurance"><li><IconMapPin size={18} aria-hidden="true" />I can pick you up.</li><li><IconClock size={18} aria-hidden="true" />I can wait at your stops.</li><li><IconArrowBackUp size={18} aria-hidden="true" />I can bring you back.</li></ul><p className="planner-cost-note">I&apos;ll confirm the route, price and availability with you. Tickets, food, shopping and treatments are extra unless we agree otherwise.</p></div></div>
+    <form className="planner-form" onSubmit={submit}>
+      <fieldset className="ride-type-field"><legend>What kind of ride?</legend><div className="ride-type-options">{rideTypes.map((type) => <label className="ride-type-choice" key={type}><input type="radio" name="ride-type" value={type} checked={details.rideType === type} onChange={() => change("rideType", type)} /><span>{type}</span></label>)}</div></fieldset>
+      <div className="selected-stops"><div className="field-heading"><h3>Your stops</h3>{selected.length > 0 && <button type="button" className="quiet-button" onClick={clearStops}>Clear stops</button>}</div>{chosen.length ? <ul>{chosen.map((stop) => <li key={stop.id}><span>{stop.title}</span><button type="button" className="icon-button" aria-label={`Remove ${stop.title} from your ride`} onClick={() => toggleStop(stop.id)}><X size={15} aria-hidden="true" /></button></li>)}</ul> : <p>We can choose together.</p>}<Link href="/tours#explore" className="text-link">{chosen.length ? "Add another stop" : "Browse the places"}</Link></div>
+      <label className="form-field"><span>Your hotel or pickup area <small>(optional)</small></span><input name="pickup" autoComplete="street-address" placeholder="Hotel name, area, or meeting spot" maxLength={180} value={details.pickup} onChange={(event) => change("pickup", event.target.value)} /></label>
+      <div className="form-row"><label className="form-field"><span>Date <small>(optional)</small></span><input type="date" name="date" min={sriLankaDate()} value={details.date} onChange={(event) => change("date", event.target.value)} /></label><label className="form-field"><span>Time <small>(optional)</small></span><input type="time" name="time" value={details.time} onChange={(event) => change("time", event.target.value)} /></label></div>
+      <label className="form-field"><span>How many people? <small>(optional)</small></span><select name="guests" value={details.guests} onChange={(event) => change("guests", event.target.value)}><option value="">Choose if you know</option><option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4 or more">4 or more people</option></select><small>Bringing luggage or a group? Let me know so I can confirm a suitable ride.</small></label>
+      <label className="return-check"><input type="checkbox" name="return" checked={details.returnToHotel} onChange={(event) => change("returnToHotel", event.target.checked)} /><span className="check-box" aria-hidden="true"><Check size={15} /></span><span>Bring me back to my hotel<small>Untick for a one-way ride.</small></span></label>
+      <label className="form-field"><span>Anything else? <small>(optional)</small></span><textarea name="notes" rows={3} placeholder="A restaurant you like, how long you have, or a question…" maxLength={500} value={details.notes} onChange={(event) => change("notes", event.target.value)} /></label>
+      <button className="btn-brand planner-submit" type="submit"><MessageCircle size={19} aria-hidden="true" />Send request on WhatsApp</button>
+      <p className="submit-note">Your ride details open in my WhatsApp chat. Send the message and I&apos;ll confirm the plan with you.</p>
+      {contactPhone && <a href={`tel:+${contactPhone}`} className="text-link call-alternative"><Phone size={17} aria-hidden="true" />Prefer a call? {contactPhoneLabel}</a>}
+      <p className="form-status" role="status" aria-live="polite">{status}</p>
+    </form>
+  </div></section>;
 }

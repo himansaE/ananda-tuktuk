@@ -1,133 +1,145 @@
 "use client";
 import React, { useRef } from "react";
 import Image from "next/image";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion";
+import { IconBrandWhatsapp, IconPhone, IconCurrentLocation } from "@tabler/icons-react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const inputStyles =
+  "w-full bg-white/[0.06] border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder:text-white/35 focus:outline-none focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] transition-colors";
 
 export function Contact() {
   const container = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.fromTo(".gsap-reveal-contact", 
-      { y: 30, opacity: 0, filter: "blur(4px)" },
-      { 
-        y: 0, 
-        opacity: 1, 
-        filter: "blur(0px)",
-        duration: 1, 
-        ease: "power3.out", 
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-        }
-      }
-    );
-  }, { scope: container });
+  useGSAP(
+    () => {
+      const reduce = prefersReducedMotion();
+      if (reduce) return;
 
-  const getWhatsAppLink = () => {
-    const msg = "Hello Ananda! I have a question about booking a tour.";
-    return `https://wa.me/94770000000?text=${encodeURIComponent(msg)}`;
-  };
+      /* Load-in: signature blur stagger */
+      gsap.fromTo(
+        ".contact-reveal",
+        { y: 40, opacity: 0, filter: "blur(12px)" },
+        {
+          y: 0, opacity: 1, filter: "blur(0px)",
+          duration: 1, ease: "power3.out", stagger: 0.12, delay: 0.15,
+          clearProps: "filter",
+        }
+      );
+
+      /* Map image: slow Ken Burns */
+      gsap.fromTo(
+        ".contact-map-img",
+        { scale: 1.05 },
+        { scale: 1.14, duration: 16, ease: "none", repeat: -1, yoyo: true }
+      );
+    },
+    { scope: container }
+  );
+
+  const whatsappLink = `https://wa.me/94770000000?text=${encodeURIComponent("Hello Ananda! I have a question about booking a tour.")}`;
 
   return (
-    <section ref={container} className="w-full max-w-[1280px] mx-auto px-6 md:px-16 py-32 mt-20">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-        {/* Contact Form & Actions */}
-        <div className="space-y-8">
-          <div className="gsap-reveal-contact">
-            <h2 className="text-headline-xl font-bold text-primary mb-6">
-              Get in Touch
-            </h2>
-            <p className="text-body-md text-on-surface-variant leading-relaxed">
-              Ready to book your adventure or have a question? The fastest way to reach me is via WhatsApp, but feel free to call or send a message here.
+    <section ref={container} className="relative bg-[#151312] text-white min-h-screen flex items-center overflow-hidden">
+      {/* Faint red glow, like a tail light in the dark */}
+      <div
+        className="absolute -top-40 -right-40 w-[560px] h-[560px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(179,36,43,0.22), transparent 65%)" }}
+      />
+
+      <div className="container-page relative z-10 w-full pt-40 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        {/* ── Left: talk to me ─────────────────────── */}
+        <div className="space-y-9">
+          <div className="contact-reveal">
+            <span className="eyebrow block mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>
+              Ready when you are
+            </span>
+            <h1
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontWeight: 400,
+                fontSize: "clamp(2.8rem, 6.5vw, 5.25rem)",
+                lineHeight: 1.03,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Get in <em style={{ fontStyle: "italic", color: "var(--color-accent)" }}>Touch</em>
+            </h1>
+            <p className="type-body text-white/65 leading-relaxed max-w-md mt-6" style={{ fontSize: "1.0625rem" }}>
+              Ready to book your adventure or have a question? The fastest way
+              to reach Ananda is via WhatsApp.
             </p>
           </div>
 
-          {/* Booking options */}
-          <div className="gsap-reveal-contact flex flex-col sm:flex-row gap-4">
-            <a 
-              href={getWhatsAppLink()}
+          <div className="contact-reveal flex flex-col sm:flex-row gap-3">
+            <a
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-4 rounded-xl text-label-md uppercase tracking-wider hover:opacity-90 transition-opacity active:scale-95 duration-150 text-center"
+              className="flex-1 flex items-center justify-center gap-2.5 rounded-full py-4 px-6 text-white font-semibold transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-10px_rgba(37,211,102,0.5)] active:scale-95"
+              style={{ background: "var(--color-whatsapp)", fontFamily: "var(--font-accent)", fontSize: "0.9375rem" }}
             >
-              <span className="material-symbols-outlined text-[20px]">chat</span>
+              <IconBrandWhatsapp size={19} strokeWidth={1.8} />
               Message on WhatsApp
             </a>
-            <a 
+            <a
               href="tel:+94770000000"
-              className="flex-1 flex items-center justify-center gap-2 bg-surface-container-high text-on-surface px-6 py-4 rounded-xl text-label-md uppercase tracking-wider hover:bg-surface-variant transition-colors border border-outline-variant/30 active:scale-95 duration-150 text-center"
+              className="flex-1 flex items-center justify-center gap-2.5 rounded-full py-4 px-6 bg-white/[0.07] text-white border border-white/20 hover:border-white/60 transition-colors active:scale-95 font-semibold"
+              style={{ fontFamily: "var(--font-accent)", fontSize: "0.9375rem" }}
             >
-              <span className="material-symbols-outlined text-[20px]">call</span>
+              <IconPhone size={19} strokeWidth={1.8} />
               +94 77 000 0000
             </a>
           </div>
 
-          {/* Simple form */}
-          <form className="gsap-reveal-contact space-y-6">
+          <form className="contact-reveal space-y-5" onSubmit={(e) => e.preventDefault()}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block text-label-md text-on-surface mb-2 font-medium" htmlFor="name">Name</label>
-                <input 
-                  className="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-body-md" 
-                  id="name" 
-                  placeholder="Your name" 
-                  type="text"
-                />
+              <div className="space-y-2">
+                <label htmlFor="name" className="type-label text-white/50">Name</label>
+                <input id="name" type="text" placeholder="Your name" className={inputStyles} />
               </div>
-              <div>
-                <label className="block text-label-md text-on-surface mb-2 font-medium" htmlFor="email">Email</label>
-                <input 
-                  className="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-body-md" 
-                  id="email" 
-                  placeholder="your@email.com" 
-                  type="email"
-                />
+              <div className="space-y-2">
+                <label htmlFor="email" className="type-label text-white/50">Email</label>
+                <input id="email" type="email" placeholder="your@email.com" className={inputStyles} />
               </div>
             </div>
-            <div>
-              <label className="block text-label-md text-on-surface mb-2 font-medium" htmlFor="message">Message</label>
-              <textarea 
-                className="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-body-md resize-none" 
-                id="message" 
-                placeholder="How can I help you?" 
-                rows={4}
-              />
+            <div className="space-y-2">
+              <label htmlFor="message" className="type-label text-white/50">Message</label>
+              <textarea id="message" placeholder="How can Ananda help you?" rows={4} className={`${inputStyles} resize-none`} />
             </div>
-            <button 
-              className="w-full bg-primary text-on-primary px-6 py-4 rounded-lg text-label-md uppercase tracking-wider hover:bg-primary/90 transition-colors active:scale-95 duration-150" 
-              type="button"
-            >
+            <button type="submit" className="btn-brand w-full justify-center" style={{ padding: "1rem" }}>
               Send Message
             </button>
           </form>
         </div>
 
-        {/* Map Area */}
-        <div className="gsap-reveal-contact h-full min-h-[400px] bg-surface-container rounded-2xl overflow-hidden border border-outline-variant/30 relative flex items-center justify-center">
-          <Image 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHf7hf8TsQat6PVrLZWKt-8ZXyPeqTyvY4YmJ_3IeRp62qvTPXL4TfX9pFsVogBLfpu99sA1uqcY8k11-GziVSa4_azGRTF_az-0wqYMU4169UOAN0Nzs8yFcBmu0V6_DMvhLW7DQR7oD5UmAMimJBsRrDfU15EDFFjMi4zHMGFXu7HRIYxu4Nf8XnVhQznJX5f456yQAauNBwKFyUh4_JQqUgANlrIPMARw6vjF-tsBkfS6RGH7jl" 
-            alt="Base Map Location"
-            fill
-            className="object-cover"
-          />
-          {/* Overlay details */}
-          <div className="absolute bottom-6 left-6 right-6 bg-surface-container-lowest/95 backdrop-blur-sm p-6 rounded-xl border border-outline-variant/20">
-            <h4 className="text-headline-lg font-bold text-primary mb-2">Our Base: Embul Ambe</h4>
-            <p className="text-body-md text-on-surface-variant flex items-center gap-2">
-              <span className="material-symbols-outlined text-[18px]">distance</span>
-              10 mins to Dambulla Cave Temple
-            </p>
-            <p className="text-body-md text-on-surface-variant flex items-center gap-2 mt-1">
-              <span className="material-symbols-outlined text-[18px]">distance</span>
-              25 mins to Sigiriya Rock
-            </p>
+        {/* ── Right: the base ──────────────────────── */}
+        <div className="contact-reveal relative min-h-[420px] lg:min-h-[560px] rounded-[28px] overflow-hidden">
+          <div className="contact-map-img absolute inset-0 will-change-transform">
+            <Image
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHf7hf8TsQat6PVrLZWKt-8ZXyPeqTyvY4YmJ_3IeRp62qvTPXL4TfX9pFsVogBLfpu99sA1uqcY8k11-GziVSa4_azGRTF_az-0wqYMU4169UOAN0Nzs8yFcBmu0V6_DMvhLW7DQR7oD5UmAMimJBsRrDfU15EDFFjMi4zHMGFXu7HRIYxu4Nf8XnVhQznJX5f456yQAauNBwKFyUh4_JQqUgANlrIPMARw6vjF-tsBkfS6RGH7jl"
+              alt="Embul Ambe location"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div
+            className="absolute inset-x-0 bottom-0 p-7 pt-28"
+            style={{ background: "linear-gradient(to top, rgba(12,10,9,0.85), transparent)" }}
+          >
+            <h4 style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: "1.4rem" }} className="mb-3">
+              Our Base: Embul Ambe
+            </h4>
+            <div className="flex flex-col gap-2">
+              <p className="type-caption text-white/75 flex items-center gap-2">
+                <IconCurrentLocation size={14} strokeWidth={1.5} className="text-[var(--color-accent)]" />
+                10 mins to Dambulla Cave Temple
+              </p>
+              <p className="type-caption text-white/75 flex items-center gap-2">
+                <IconCurrentLocation size={14} strokeWidth={1.5} className="text-[var(--color-accent)]" />
+                25 mins to Sigiriya Rock Fortress
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -1,17 +1,14 @@
-import { NavBar } from "@/components/NavBar";
-import { Tours } from "@/components/Tours";
+import type { Metadata } from "next";
+import { CinematicHero } from "@/components/CinematicHero";
+import { ExperienceBrowser } from "@/components/ExperienceBrowser";
+import { OutingIdeas } from "@/components/OutingIdeas";
 import { Planner } from "@/components/Planner";
-import { Footer } from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Places to Explore",
+  description: "Come exploring with me, Ananda. Choose Sigiriya, Dambulla, local food, woodwork, heritage shops, herbs, spas and scenic stops for your tuk-tuk ride.",
+};
 
 export default function ToursPage() {
-  return (
-    <main className="w-full bg-background text-on-background min-h-screen">
-      <NavBar />
-      <div className="pt-20">
-        <Tours />
-        <Planner />
-      </div>
-      <Footer />
-    </main>
-  );
+  return <main id="main-content"><CinematicHero eyebrow="Places around Dambulla & Sigiriya" title="Your day." emphasis="Your stops." subtitle="Choose sights, food, crafts, shops or a spa stop. We'll work out the route together." backgroundImage="/images/heritage.webp" alt="Colourful traditional Sri Lankan masks" action="Choose stops" href="#explore" /><ExperienceBrowser full /><OutingIdeas /><Planner /></main>;
 }

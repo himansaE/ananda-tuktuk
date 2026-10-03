@@ -1,41 +1,39 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, type ReactNode } from "react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-export function LenisProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
-
+export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-    lenisRef.current = lenis;
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    const ticker = gsap.ticker;
-    const updateLenis = (time: number) => {
-      lenis.raf(time * 1000);
+    let mounted = true;
+    let generation = 0;
+    const media = window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)");
+    let cleanup: (() => void) | undefined;
+    const sync = () => {
+      cleanup?.();
+      cleanup = undefined;
+      const request = ++generation;
+      const connection = navigator as Navigator & { connection?: { saveData?: boolean } };
+      if (!media.matches || connection.connection?.saveData) return;
+      void Promise.all([import("lenis"), import("@/lib/gsap")]).then(([{ default: Lenis }, { gsap, ScrollTrigger }]) => {
+        if (!mounted || request !== generation || !media.matches) return;
+        const lenis = new Lenis({
+          duration: 1.45, lerp: 0, smoothWheel: true, syncTouch: false,
+          prevent: (node) => node.closest("dialog, [data-native-scroll]") !== null,
+        });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.lagSmoothing(0);
+        const tick = (time: number) => lenis.raf(time * 1000);
+        gsap.ticker.add(tick);
+        const interrupt = (event: KeyboardEvent) => {
+          if (["Tab", "PageDown", "PageUp", "Home", "End", "ArrowDown", "ArrowUp", " "].includes(event.key)) lenis.scrollTo(scrollY, { immediate: true });
+        };
+        window.addEventListener("keydown", interrupt);
+        cleanup = () => { window.removeEventListener("keydown", interrupt); gsap.ticker.remove(tick); lenis.destroy(); };
+      });
     };
-
-    ticker.add(updateLenis);
-    ticker.lagSmoothing(0);
-
-    return () => {
-      ticker.remove(updateLenis);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
+    sync();
+    media.addEventListener("change", sync);
+    return () => { mounted = false; cleanup?.(); media.removeEventListener("change", sync); };
   }, []);
-
-  return <>{children}</>;
+  return children;
 }

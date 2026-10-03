@@ -1,17 +1,9 @@
-import { NavBar } from "@/components/NavBar";
 import { Hero } from "@/components/Hero";
-import { Ride } from "@/components/Ride";
-import { Gallery } from "@/components/Gallery";
-import { Footer } from "@/components/Footer";
+import { HomeRideStory } from "@/components/HomeRideStory";
+import { DestinationShowcase } from "@/components/DestinationShowcase";
+import { ExperienceBrowser } from "@/components/ExperienceBrowser";
+import { Faq } from "@/components/Faq";
 
 export default function Home() {
-  return (
-    <main className="w-full bg-background text-on-background min-h-screen">
-      <NavBar />
-      <Hero />
-      <Ride />
-      <Gallery />
-      <Footer />
-    </main>
-  );
+  return <main id="main-content"><Hero /><DestinationShowcase /><ExperienceBrowser /><HomeRideStory /><Faq compact /></main>;
 }
