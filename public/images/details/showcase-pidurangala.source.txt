@@ -1,0 +1,5 @@
+Source: https://commons.wikimedia.org/wiki/File:Pidurangala_%26_Sigiriya_Rocks.jpg
+Author: Thawsheeb Photography
+License: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+Original dimensions: 3588 x 2317
+Changes: Resized to 2880px wide, WebP encoding. Adapted asset remains CC BY-SA 4.0.

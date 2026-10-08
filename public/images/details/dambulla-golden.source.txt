@@ -1,0 +1,6 @@
+Title: Dambulla Golden Buddha Statue.jpg
+Author: Nadeeshan Thabrew
+Source: https://commons.wikimedia.org/wiki/File:Dambulla_Golden_Buddha_Statue.jpg
+License: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/
+Changes: Resized to 1600px wide and encoded as WebP. Responsive display crops may apply.
+The adapted image remains licensed CC BY-SA 4.0.

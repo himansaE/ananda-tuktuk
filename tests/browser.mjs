@@ -137,11 +137,14 @@ try {
     await verifyDraft();
   });
 
-  await check("The mobile enquiry action returns after leaving a visible planner", async () => {
+  await check("Returning from the planner hides the home bar until the stops section", async () => {
     await page.locator("#plan").scrollIntoViewIfNeeded();
     await page.waitForFunction(() => document.querySelector(".mobile-ridebar")?.dataset.plannerVisible === "true");
     await page.locator(".nav-shell .brand").click();
     await page.waitForURL(`${base}/`, { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() => document.querySelector(".mobile-ridebar").dataset.exploreReached === "false");
+    assert.equal(await page.locator(".mobile-ridebar").evaluate(node => node.inert), true);
+    await page.locator("#explore").evaluate(node => scrollTo({ top: node.getBoundingClientRect().top + scrollY - 120, behavior: "instant" }));
     await page.waitForFunction(() => getComputedStyle(document.querySelector(".mobile-ridebar")).visibility === "visible");
     assert.equal(await page.locator(".mobile-ridebar").getAttribute("data-planner-visible"), "false");
     await go("/contact#plan");
@@ -163,7 +166,7 @@ try {
     await page.getByRole("button", { name: "Crafts & shops", exact: true }).click();
     assert.equal(await page.locator(".experience-card").count(), 2);
     assert.equal(await page.locator('.experience-card[data-selected="true"]').count(), 1);
-    await page.getByRole("button", { name: "Herbs & spas", exact: true }).click();
+    await page.getByRole("button", { name: "Herbs & massage", exact: true }).click();
     assert.equal(await page.locator(".experience-card").count(), 2);
     await page.getByRole("button", { name: "Everything", exact: true }).click();
     assert.equal(await page.locator(".experience-card").count(), 10);
@@ -172,7 +175,7 @@ try {
 
   await check("An outing idea carries its stops and ride type into the planner", async () => {
     await page.getByRole("button", { name: "Clear stops", exact: true }).click();
-    await page.getByRole("link", { name: "Use this idea", exact: true }).first().click();
+    await page.getByRole("link", { name: "Choose this outing", exact: true }).first().click();
     await page.waitForURL("**/contact?ride=outing#plan", { waitUntil: "domcontentloaded" });
     await page.locator(".selected-stops li").first().waitFor();
     assert.equal(await page.locator(".selected-stops li").count(), 2);

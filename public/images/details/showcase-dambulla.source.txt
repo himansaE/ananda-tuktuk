@@ -1,0 +1,5 @@
+Source: https://commons.wikimedia.org/wiki/File:Exterior_of_Dambulla_cave_temple_3.jpg
+Author: Dudva
+License: CC0 1.0 Universal
+Original dimensions: 4005 x 2823
+Changes: Resized to 2880px wide, WebP encoding.

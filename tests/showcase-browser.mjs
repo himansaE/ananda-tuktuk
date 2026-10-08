@@ -57,9 +57,9 @@ try {
       assert.equal(await selected(page), 'View Sigiriya', 'Offscreen destinations must stay paused');
       await enter(page);
       await page.waitForFunction(() => document.querySelector('.showcase-card[aria-pressed="true"]').ariaLabel === 'View Dambulla', null, { timeout: 7500 });
-      await page.waitForFunction(() => document.querySelector('.showcase-card[aria-pressed="true"]').ariaLabel === 'View Minneriya', null, { timeout: 7500 });
+      await page.waitForFunction(() => document.querySelector('.showcase-card[aria-pressed="true"]').ariaLabel === 'View Pidurangala', null, { timeout: 7500 });
       assert.equal(await page.getByRole('button', { name: /Pause slideshow|Play slideshow/ }).count(), 0);
-      await page.getByRole('button', { name: 'View Minneriya', exact: true }).focus();
+      await page.getByRole('button', { name: 'View Pidurangala', exact: true }).focus();
       const stopped = await selected(page);
       const transform = await page.locator('.showcase-drift').nth(2).evaluate(node => getComputedStyle(node).transform);
       await page.waitForTimeout(5300);
@@ -81,7 +81,7 @@ try {
       assert.equal(await selected(page), 'View Dambulla');
       assert.equal(await page.locator('.showcase-slide').nth(1).evaluate(node => getComputedStyle(node).opacity), '1');
       assert.equal(await page.locator('.showcase-title').evaluate(node => getComputedStyle(node).transform), 'none');
-      await page.getByRole('button', { name: 'View Minneriya', exact: true }).click();
+      await page.getByRole('button', { name: 'View Pidurangala', exact: true }).click();
       await page.getByRole('button', { name: 'View Sigiriya', exact: true }).click();
       await page.getByRole('button', { name: 'View Dambulla', exact: true }).click();
       await page.waitForFunction(() => getComputedStyle(document.querySelectorAll('.showcase-slide')[1]).opacity === '1');

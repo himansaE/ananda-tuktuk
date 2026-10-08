@@ -10,5 +10,5 @@ export function RideLink({ className = "btn-brand", children, direct = false }: 
       {children ?? "WhatsApp me"}<IconBrandWhatsapp size={18} aria-hidden="true" />
     </a>
   );
-  return <Link href="/contact#plan" className={className}>{children ?? "Plan a ride"}<IconArrowUpRight size={18} aria-hidden="true" /></Link>;
+  return <Link href="/tours#explore" className={className}>{children ?? "Plan a ride"}<IconArrowUpRight size={18} aria-hidden="true" /></Link>;
 }

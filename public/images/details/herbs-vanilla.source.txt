@@ -1,0 +1,7 @@
+Source: User-supplied codex-clipboard-06402f03-b5d7-4969-897b-56008ee8c719.jpg
+Edit mode: Built-in image_gen
+Saved asset: public/images/details/herbs-vanilla.webp
+Gallery order: herbs-garden-group.jpg, herbs-vanilla.webp, herbs-spices.jpg, herbs-garden-visit.jpg
+
+Final prompt:
+Edit only the small white overlaid watermark text in the centre of this photograph. Remove all its text lines and reconstruct the underlying foliage and photographic details naturally. Preserve the man in his white shirt reaching upward, his face and hand, hanging vanilla plants, leaves, green metal trellis, garden background, original framing, lighting and colors. Do not crop or add objects. Keep the scene faithful to the supplied photo. Output a natural photograph with no watermark or added text.

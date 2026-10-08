@@ -1,14 +1,12 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { useScrollMotion } from "./useScrollMotion";
 import { useCinemaMotion } from "./useCinemaMotion";
 
-export function MotionSection({ children, className = "", id, label, labelledBy, motionKey, cinema = false }: {
-  children: ReactNode; className?: string; id?: string; label?: string; labelledBy?: string; motionKey?: string; cinema?: boolean;
+export function MotionSection({ children, className = "", id, label, labelledBy, motionKey, cinema = true, intro = false, as: Tag = "section" }: {
+  children: ReactNode; className?: string; id?: string; label?: string; labelledBy?: string; motionKey?: string; cinema?: boolean; intro?: boolean; as?: "section" | "footer";
 }) {
   const scope = useRef<HTMLElement>(null);
-  useScrollMotion(scope, motionKey, !cinema);
-  useCinemaMotion(scope, cinema, motionKey);
-  return <section ref={scope} id={id} className={`${className}${cinema ? " cinema-ui" : ""}`} aria-label={label} aria-labelledby={labelledBy}>{children}</section>;
+  useCinemaMotion(scope, cinema, motionKey, intro);
+  return <Tag ref={scope} id={id} className={`${className}${cinema ? " cinema-ui" : ""}`} aria-label={label} aria-labelledby={labelledBy}>{children}</Tag>;
 }

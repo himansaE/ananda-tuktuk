@@ -1,0 +1,76 @@
+/* Local notebook: printed photographs, open rows and readable scroll chapters.
+   All selectors are scoped; the three approved homepage sections are untouched. */
+.notebook-opening{padding:clamp(32px,5vw,72px) 0 0}
+.notebook-intro{text-align:center;max-width:900px;margin:auto}
+.notebook-intro h1{font:400 clamp(48px,7.5vw,112px)/1.07 var(--font-serif),serif;letter-spacing:-.045em;margin:0;padding-bottom:.08em}
+.notebook-intro h1 em,.notebook-margin-note em{color:var(--color-brand)}
+.notebook-intro p{font-size:16px;line-height:1.7;color:var(--color-ink-soft);margin:24px auto 14px;max-width:540px}
+.notebook-intro .text-link{font-size:14px}
+.notebook-collage{display:grid;grid-template-columns:1fr 1.65fr 1fr;gap:32px;align-items:start;padding:56px 16px 60px}
+.notebook-collage-item{min-width:0}
+.notebook-print{margin:0;background:#fff;padding:10px 10px 0;box-shadow:0 9px 26px #25262009}
+.notebook-print-image{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--color-surface-2)}
+.notebook-print figcaption{font-size:12px;line-height:1.5;padding:13px 3px 18px;color:var(--color-ink-soft)}
+.notebook-collage-main{grid-column:2;grid-row:1/3}
+.notebook-collage-main .notebook-print{transform:rotate(-3deg)}
+.notebook-collage-food{grid-column:1;grid-row:1;margin-top:65px}
+.notebook-collage-food .notebook-print{transform:rotate(4deg)}
+.notebook-collage-food .notebook-print-image{aspect-ratio:1}
+.notebook-collage-craft{grid-column:3;grid-row:1;margin-top:105px}
+.notebook-collage-craft .notebook-print{transform:rotate(3deg)}
+.notebook-margin-note{grid-column:1;grid-row:2;font:400 clamp(25px,3vw,40px)/1.15 var(--font-serif),serif;padding-left:24px;margin:0}
+.notebook-section-heading{display:grid;grid-template-columns:1.25fr 1fr;gap:24px 80px;align-items:end;margin-bottom:46px}
+.notebook-section-heading h2{margin:0}
+.notebook-section-heading p{color:var(--color-ink-soft);max-width:430px;margin:0;line-height:1.7}
+.notebook-section-heading .notebook-draft-note{margin-top:16px;font-size:12px;max-width:390px;line-height:1.6;display:flex;gap:9px;align-items:flex-start}
+.notebook-draft-note svg{flex-shrink:0;margin-top:2px}
+.notebook-ledger>a,.notebook-ledger>div{display:grid;grid-template-columns:36px 1fr 1fr 24px;align-items:center;gap:24px;padding:28px 0;border-top:1px solid var(--color-border);text-decoration:none}
+.notebook-number{color:var(--color-brand);font-size:12px;font-variant-numeric:tabular-nums}
+.notebook-ledger h3{font:400 clamp(24px,2.7vw,34px)/1.2 var(--font-serif),serif;margin:0;transition:color 160ms ease}
+.notebook-ledger p{font-size:14px;color:var(--color-ink-soft);margin:0}
+.notebook-ledger svg{justify-self:end;transition:transform 180ms var(--ease-out)}
+.notebook-ledger>a:focus-visible{outline:2px solid var(--color-brand);outline-offset:5px}
+.notebook-ride-end{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--color-border);padding-top:24px}
+.notebook-ride-end p{font-size:13px;color:var(--color-ink-soft);max-width:430px;margin:0}
+.notebook-ride-end .text-link{font-size:14px;flex-shrink:0}
+.notebook-panorama{position:relative;height:clamp(360px,65svh,650px);display:flex;align-items:flex-end;padding:48px max(24px,7vw);overflow:hidden;isolation:isolate}
+.notebook-panorama-image{position:absolute;inset:0;z-index:-2;overflow:hidden}
+.notebook-panorama::after{content:"";position:absolute;inset:30% 0 0;z-index:-1;background:linear-gradient(transparent,#192117b8);pointer-events:none}
+.notebook-panorama>p{font:400 clamp(36px,5vw,66px)/1.12 var(--font-serif),serif;color:#fff;margin:0}
+.notebook-panorama>p em{color:#fff}
+.notebook-closing .notebook-section-heading{margin-bottom:0}
+.notebook-closing .btn-brand{margin-top:24px}
+.notebook-gallery{background:var(--color-surface-2)}
+.notebook-guest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:28px 36px;padding:12px 12px 20px}
+.notebook-guest-item{min-width:0}
+.notebook-guest-item:nth-child(3n + 1) .notebook-print{transform:rotate(-2deg)}
+.notebook-guest-item:nth-child(3n + 2) .notebook-print{transform:rotate(2deg)}
+.notebook-guest-item:nth-child(3n + 3) .notebook-print{transform:rotate(-1deg)}
+.notebook-guest-image{position:relative;background:#e7e3d8}
+.notebook-guest-image img{display:block;width:100%;height:auto}
+.notebook-photo-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#e7e3d8;color:#686457}
+.notebook-guest-item:nth-child(2n) .notebook-photo-placeholder{background:#e4e7df;color:#626958}
+.notebook-photo-placeholder>span:first-child{font:400 clamp(38px,5vw,72px)/1 var(--font-serif),serif;opacity:.6}
+.notebook-photo-placeholder>span:last-child{font-size:12px}
+.notebook-review-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:0 72px}
+.notebook-review{margin:0;padding:32px 0;border-top:1px solid var(--color-border)}
+.notebook-review:first-child{grid-row:span 2;padding-right:32px}
+.notebook-review blockquote,.notebook-review blockquote p{margin:0}
+.notebook-review blockquote{font:400 26px/1.4 var(--font-serif),serif;letter-spacing:-.015em}
+.notebook-review:first-child blockquote{font-size:clamp(30px,3.1vw,43px)}
+.notebook-review figcaption{font-size:12px;color:var(--color-ink-soft);margin-top:28px}
+.notebook-review figcaption span{display:block;font-size:11px;margin-top:4px}
+@media(hover:hover) and (pointer:fine){.notebook-ledger>a:hover h3{color:var(--color-brand)}.notebook-ledger>a:hover svg{transform:translate(2px,-2px)}}
+@media(max-width:699px){
+ .notebook-intro h1{font-size:clamp(44px,11.5vw,70px)}.notebook-intro p{font-size:15px;max-width:340px}.notebook-intro p br{display:none}
+ .notebook-collage{grid-template-columns:1fr 1fr;gap:22px 20px;padding:36px 7px 20px}.notebook-collage-main{grid-column:1/3;grid-row:1;margin:0 25px}.notebook-collage-main .notebook-print-image{aspect-ratio:4/3}.notebook-collage-food{grid-column:1;grid-row:2;margin:0}.notebook-collage-craft{grid-column:2;grid-row:2;margin-top:20px}.notebook-collage-craft .notebook-print-image{aspect-ratio:1}.notebook-margin-note{display:none}
+ .notebook-print{padding:7px 7px 0}.notebook-print figcaption{font-size:11px;padding:10px 1px 13px}
+ .notebook-section-heading{grid-template-columns:1fr;gap:22px;margin-bottom:32px}.notebook-section-heading p{font-size:15px}.notebook-section-heading .notebook-draft-note{font-size:12px;margin-top:10px}
+ .notebook-ledger>a,.notebook-ledger>div{grid-template-columns:24px 1fr 22px;gap:8px 10px;padding:24px 0}.notebook-ledger h3{font-size:26px}.notebook-ledger p{grid-column:2;font-size:13px}.notebook-ledger svg{grid-column:3;grid-row:1/3}.notebook-number{font-size:11px}
+ .notebook-ride-end{display:block}.notebook-ride-end .text-link{margin-top:16px}
+ .notebook-panorama{height:52svh;min-height:340px;padding:30px 24px}
+ .notebook-guest-grid{grid-template-columns:minmax(0,1fr);gap:28px;padding:8px 8px 10px;max-width:420px;margin-inline:auto}.notebook-guest-item .notebook-print{transform:none}.notebook-guest-item:nth-child(even){margin-top:0}
+ .notebook-review-grid{grid-template-columns:1fr;gap:0}.notebook-review:first-child{grid-row:auto;padding-right:0}.notebook-review blockquote,.notebook-review:first-child blockquote{font-size:26px}.notebook-review{padding:26px 0}.notebook-review figcaption{margin-top:20px}
+}
+@media(prefers-reduced-motion:reduce){.notebook-ledger h3,.notebook-ledger svg{transition:none}.notebook-ledger>a:hover svg{transform:none}}
+

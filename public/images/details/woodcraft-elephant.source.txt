@@ -1,0 +1,7 @@
+Source: User-supplied woodcraft photo, codex-clipboard-b1c45b01-e5a2-4dbc-bc78-b5c364ec2fba.webp
+Edit mode: Built-in image_gen
+Saved asset: public/images/details/woodcraft-elephant.webp
+Other supplied gallery assets, in order: woodcraft-painting.jpg, woodcraft-carving.webp
+
+Final prompt:
+Edit this photograph for a woodcraft photo gallery. Remove every overlaid Dreamstime watermark: all spiral logos, diagonal watermark text, copyright text, and thin diagonal watermark grid lines, reconstructing the underlying photographic detail naturally. Crop off the entire blue footer strip at the bottom; the final image must contain only the original photograph. Preserve the original photograph's composition above the footer, the artisan's hands, yellow-handled carving tool, partially carved wooden elephant, rough timber and wood shavings, natural texture, warm lighting, colors, and realistic photographic style. Do not add objects or change the subject. No text, logo, watermark, footer, border, or blue band in the result.

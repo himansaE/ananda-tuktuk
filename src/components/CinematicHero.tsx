@@ -24,6 +24,6 @@ export function CinematicHero({ eyebrow, title, emphasis, subtitle, backgroundIm
   }, { scope });
   return <section ref={scope} className={`cinema-hero cinema-ui${home ? " cinema-home" : ""}`} aria-labelledby="cinema-title" onFocusCapture={() => opening.current?.progress(1)}>
     <div className="cinema-backdrop" data-parallax-frame><div className="cinema-photo-layer" data-parallax><Image data-cinema-camera src={backgroundImage} alt={alt} fill sizes="100vw" quality={65} loading="eager" fetchPriority="high" className="cover-image" /></div></div>
-    <div className="container-page cinema-opening"><div><p className="cinema-eyebrow">{eyebrow}</p><h1 id="cinema-title"><span className="cinema-title-line">{title}</span><span className="cinema-title-line"><em>{emphasis}</em></span></h1></div><div><p className="cinema-intro">{subtitle}</p><div className="cinema-actions">{action && href && <Link href={href} className="btn-brand">{action}</Link>}{home && <Link href="/contact#plan" className="text-link">Plan a ride</Link>}</div></div></div>
+    <div className="container-page cinema-opening"><div><p className="cinema-eyebrow">{eyebrow}</p><h1 id="cinema-title"><span className="cinema-title-line">{title}</span><span className="cinema-title-line"><em>{emphasis}</em></span></h1></div><div><p className="cinema-intro">{subtitle}</p><div className="cinema-actions">{action && href && <Link href={href} className="btn-brand">{action}</Link>}{home && <Link href="/tours#explore" className="text-link">Plan a ride</Link>}</div></div></div>
   </section>;
 }

@@ -3,11 +3,12 @@ export const categories = [
   { id: "sights", label: "Sights" },
   { id: "food", label: "Food" },
   { id: "crafts", label: "Crafts & shops" },
-  { id: "relax", label: "Herbs & spas" },
+  { id: "relax", label: "Herbs & massage" },
   { id: "nature", label: "Nature" },
 ] as const;
 
 export type Category = (typeof categories)[number]["id"];
+export type StopPhoto = { src: string; alt: string };
 export type Stop = {
   id: string;
   title: string;
@@ -19,105 +20,138 @@ export type Stop = {
   description: string;
   note: string;
   photoNote?: string;
+  photos?: StopPhoto[];
 };
 
 export const stops: Stop[] = [
   {
     id: "sigiriya", title: "Sigiriya Rock", category: "sights", label: "A little adventure",
-    image: "/images/hero-red.webp", alt: "A red tuk-tuk with Sigiriya Rock in the distance",
+    image: "/images/details/sigiriya-gardens.webp", alt: "Sigiriya Rock above the gardens and central pathway",
+    photos: [
+      { src: "/images/details/sigiriya-summit.webp", alt: "An aerial view of the ruins and pools on Sigiriya's summit" },
+      { src: "/images/details/sigiriya-lion-paws.webp", alt: "The stone lion paws and stairway leading up Sigiriya Rock" },
+      { src: "/images/details/sigiriya-frescoes.webp", alt: "Ancient painted frescoes on Sigiriya's rock wall" },
+    ],
     summary: "Visit Sigiriya and enjoy the views.",
     description: "I can take you to Sigiriya, wait while you explore, then take you to lunch or bring you back to your hotel.",
     note: "Entry tickets are separate. Tell me how much time you'd like at the rock.",
   },
   {
     id: "lunch", title: "Sri Lankan food", category: "food", label: "Something delicious",
-    image: "/images/lunch.webp", alt: "A plate of Sri Lankan rice and curry with colourful vegetables",
+    image: "/images/details/food-lamprais.webp", alt: "Rice and curries served on a banana leaf",
+    photos: [{ src: "/images/details/food-kottu.jpg", alt: "A plate of kottu with fresh vegetables" }, { src: "/images/details/food-rice-curry.jpg", alt: "Sri Lankan rice and curries served in clay bowls" }],
     summary: "Rice, curry and local restaurants.",
-    description: "Ask me for places to eat along your route, or choose your own restaurant. Let me know any food preferences when we plan the ride.",
-    note: "Food and drinks are paid separately. The restaurant is your choice.",
-    photoNote: "Example photo. I'll help you choose a restaurant.",
+    description: "Try rice and curry, kottu or a local favourite. I can suggest a place to eat along your route.",
+    note: "Tell me if you prefer mild, spicy or vegetarian food.",
   },
   {
     id: "crafts", title: "Woodwork & crafts", category: "crafts", label: "Made by hand",
-    image: "/images/crafts.webp", alt: "Hands carefully carving a piece of wood with a chisel",
+    image: "/images/details/woodcraft-painting.jpg", alt: "A visitor painting a wooden elephant in a craft workshop",
+    photos: [{ src: "/images/details/woodcraft-carving.webp", alt: "A craftsperson chiselling an intricate floral carving" }, { src: "/images/details/woodcraft-elephant.webp", alt: "A craftsperson shaping a wooden elephant with a chisel" }],
     summary: "Woodcarving and handmade crafts.",
-    description: "Visit a craft or woodcarving shop. Browse handmade pieces and, where available, see the work behind them.",
-    note: "Visits depend on opening times. Looking around doesn't mean you have to buy anything.",
-    photoNote: "Example photo. Workshops may differ.",
+    description: "Visit a workshop. Browse handmade pieces and, where available, see the work behind them.",
+    note: "Visits depend on opening times.",
   },
   {
-    id: "spa", title: "A spa stop", category: "relax", label: "Time to unwind",
-    image: "/images/spa.webp", alt: "A rolled towel, scented oil and candles set out for a relaxing spa visit",
-    summary: "A spa visit, with a ride back.",
-    description: "Choose a spa or ask me about nearby options. I can take you there, then wait or return at an agreed time.",
-    note: "Treatments and spa bookings are separate. Check the treatment, price and availability with the spa.",
-    photoNote: "Example photo. Choose your spa before the ride.",
-  },
-  {
-    id: "heritage", title: "Heritage & antique shops", category: "crafts", label: "A piece of Sri Lanka",
-    image: "/images/heritage.webp", alt: "A display of colourful traditional Sri Lankan wooden masks",
-    summary: "Masks, antiques and local keepsakes.",
-    description: "Tell me what you'd like to find. I can suggest heritage, souvenir or antique shops along your route.",
-    note: "Shopping stops are always optional. Ask the shop about an item's age, origin and any travel restrictions before buying.",
-    photoNote: "Example photo. Shops and items may differ.",
+    id: "spa", title: "Herbal massage centre", category: "relax", label: "Time to unwind",
+    image: "/images/details/massage-feet.jpg", alt: "A foot massage with oil and herbal preparations",
+    photos: [
+      { src: "/images/details/massage-oil.jpg", alt: "An oil treatment poured gently onto the forehead" },
+      { src: "/images/details/massage-head.jpg", alt: "A relaxing head massage" },
+      { src: "/images/details/massage-herbal-compress.jpg", alt: "A herbal compress used during a back massage" },
+    ],
+    summary: "A herbal massage, with a ride back.",
+    description: "Choose a herbal massage centre or ask me about nearby options. I can take you there, then wait or return at an agreed time.",
+    note: "Treatments and bookings are separate. Check the treatment, price and availability with the herbal massage centre.",
   },
   {
     id: "herbs", title: "Herbs & spices", category: "relax", label: "Follow your curiosity",
-    image: "/images/herbs.webp", alt: "Small bowls of leafy herbs and colourful spices",
+    image: "/images/details/herbs-garden-group.jpg", alt: "Visitors learning about herbs and spices in a tropical garden",
+    photos: [
+      { src: "/images/details/herbs-vanilla.webp", alt: "A guide showing vanilla plants growing on a garden trellis" },
+      { src: "/images/details/herbs-spices.jpg", alt: "Cinnamon, nutmeg, mace and pepper from a spice garden" },
+      { src: "/images/details/herbs-garden-visit.jpg", alt: "A guide introducing garden plants to visitors" },
+    ],
     summary: "Browse local herbs and spices.",
     description: "Add a herbal shop to your outing. Browse local herbs, spices and herbal products, and ask the shop about anything that interests you.",
     note: "Buying is optional. Shop products and any paid activities are separate from your ride.",
-    photoNote: "Example photo. Products may differ.",
   },
   {
     id: "dambulla", title: "Dambulla Cave Temple", category: "sights", label: "A moment of wonder",
-    image: "/images/dambulla-cave.webp", alt: "Visitors beside the white temple buildings beneath Dambulla's rock face",
+    image: "/images/details/dambulla-entrance.jpg", alt: "The white entrance to Dambulla Cave Temple beneath the rock face",
+    photos: [
+      { src: "/images/details/dambulla-painted-cave.jpg", alt: "Painted ceilings and Buddha statues inside Dambulla Cave Temple" },
+      { src: "/images/details/dambulla-statues.jpg", alt: "Buddha statues around a stupa beneath a richly painted cave ceiling" },
+      { src: "/images/details/dambulla-lotus.jpg", alt: "A lotus pond beside the white cave temple buildings" },
+    ],
     summary: "Visit the caves at your own pace.",
     description: "I can wait while you explore the cave temple. Afterwards, I'll take you to another stop or back to your hotel.",
-    note: "Entry tickets are separate. Check the temple's current dress and entry requirements before visiting.",
+    note: "When visiting the temple, please keep your shoulders and knees covered and kindly remove your shoes and hat before entering. Bring water for the climb. Entry tickets are separate.",
   },
   {
     id: "pidurangala", title: "Pidurangala views", category: "sights", label: "For the view",
-    image: "/images/sigiriya-view.webp", alt: "Sigiriya Rock rising above the green Sri Lankan countryside",
+    image: "/images/details/pidurangala-summit.webp", alt: "A visitor enjoying countryside and lake views from Pidurangala's summit",
+    photos: [
+      { src: "/images/details/pidurangala-sigiriya.webp", alt: "A couple at Pidurangala with Sigiriya Rock rising through the mist behind them" },
+      { src: "/images/details/pidurangala-panorama.webp", alt: "Panoramic views of lakes and green countryside from Pidurangala" },
+    ],
     summary: "Arrange a ride for your climb.",
     description: "Plan your pickup, time at Pidurangala and return ride with me. I can add a breakfast or lunch stop if you like.",
     note: "Entry is separate. Ask about the route and conditions before choosing a climb.",
-    photoNote: "A view of Sigiriya, the landmark seen from the surrounding area.",
   },
   {
-    id: "lake", title: "Lakes & village roads", category: "nature", label: "Take the scenic way",
-    image: "/images/lake.webp", alt: "A calm Sri Lankan lake surrounded by trees",
-    summary: "Lakeside views and quieter roads.",
-    description: "Ask me for a scenic route or a lakeside stop that fits the time you have.",
-    note: "The route and stopping places are agreed with you. Any paid local activities are separate.",
+    id: "lake", title: "Village safari", category: "nature", label: "A taste of village life",
+    image: "/images/details/village-boat.jpg", alt: "Visitors enjoying a boat ride on a village lake",
+    photos: [
+      { src: "/images/details/village-cart.jpg", alt: "Visitors riding a traditional bullock cart along a village path" },
+      { src: "/images/details/village-road.jpg", alt: "A bullock cart and its driver on a tree-lined village road" },
+      { src: "/images/details/village-lake.jpg", alt: "Visitors paddling across a lake surrounded by greenery" },
+    ],
+    summary: "Village life, boat rides and bullock carts.",
+    description: "Explore a village, enjoy a boat ride or try a traditional bullock cart ride. Tell me what you'd like to do. I can take you to the village safari, wait and bring you back.",
+    note: "We'll confirm the activities and availability before you go. Village safari activities are separate from my tuk-tuk ride.",
   },
   {
-    id: "safari", title: "A safari connection", category: "nature", label: "Into the outdoors",
-    image: "/images/safari.webp", alt: "Elephants in the Sri Lankan countryside",
-    summary: "A ride to your safari meeting point.",
-    description: "Tell me your safari meeting point and booking time. I can arrange your tuk-tuk ride there and back.",
-    note: "The tuk-tuk ride is separate from a safari. A safari jeep, park tickets and bookings must be arranged and priced separately.",
+    id: "golden-temple", title: "Dambulla Golden Temple", category: "sights", label: "A golden landmark",
+    image: "/images/details/golden-temple-entrance.webp", alt: "The Golden Buddha above the ornate entrance to Dambulla Golden Temple",
+    photos: [
+      { src: "/images/details/golden-temple-stupa.webp", alt: "A golden stupa surrounded by Buddhist flags in the temple grounds" },
+      { src: "/images/details/golden-temple-buddha.webp", alt: "A close view of the seated Golden Buddha beneath a cloudy sky" },
+    ],
+    summary: "See the Golden Buddha and temple grounds.",
+    description: "Visit the Golden Buddha and explore the temple grounds at your own pace. I can pick you up, wait while you visit and bring you back, or take you to your next stop.",
+    note: "When visiting the temple, please keep your shoulders and knees covered and kindly remove your shoes and hat before entering. You can pair this stop with Dambulla Cave Temple.",
   },
 ];
 
 export const stopIds = stops.map((stop) => stop.id);
-export const featuredStopIds = ["lunch", "crafts", "spa", "heritage", "herbs", "lake"];
+export const featuredStopIds = ["lunch", "crafts", "spa", "herbs", "lake"];
 
 export const outings = [
   {
-    title: "Temples & lunch.", mood: "A little exploring", image: "/images/dambulla-cave.webp",
-    alt: "The white temple buildings beneath Dambulla's rock face", stops: ["dambulla", "lunch"],
-    description: "Visit the caves, then stop for lunch.",
+    title: "Sigiriya & lunch.", mood: "A little adventure", image: "/images/details/sigiriya-gardens.webp",
+    alt: "Sigiriya Rock above its gardens", stops: ["sigiriya", "lunch"],
+    description: "Explore the rock at your own pace, then stop for lunch. I'll wait and bring you back.",
   },
   {
-    title: "Crafts, shops & herbs.", mood: "For curious people", image: "/images/heritage.webp",
-    alt: "Colourful Sri Lankan masks on display", stops: ["crafts", "heritage", "herbs"],
-    description: "Browse woodcarving, keepsakes and herbs.",
+    title: "Pidurangala & breakfast.", mood: "An early start", image: "/images/details/pidurangala-summit.webp",
+    alt: "Views across the countryside from Pidurangala", stops: ["pidurangala", "lunch"],
+    description: "Plan an early pickup for the climb, then enjoy breakfast. We'll confirm the timing together.",
   },
   {
-    title: "Lake, spa & lunch.", mood: "No need to rush", image: "/images/lake.webp",
-    alt: "Trees reflected in a quiet lake", stops: ["lake", "spa", "lunch"],
-    description: "Enjoy a scenic ride and a relaxing afternoon.",
+    title: "Dambulla temples.", mood: "Time to explore", image: "/images/details/dambulla-entrance.jpg",
+    alt: "The white entrance to Dambulla Cave Temple beneath the rock face", stops: ["dambulla", "golden-temple"],
+    description: "Visit the cave temple and Golden Buddha, with time to enjoy both. I'll wait and take you back.",
+  },
+  {
+    title: "Village safari.", mood: "A taste of village life", image: "/images/details/village-boat.jpg",
+    alt: "Visitors enjoying a boat ride on a village lake", stops: ["lake"],
+    description: "Enjoy a village outing with the activities you choose. We'll check what's included, including lunch.",
+  },
+  {
+    title: "Workshops & herbs.", mood: "For curious people", image: "/images/details/woodcraft-painting.jpg",
+    alt: "A visitor painting a wooden elephant in a workshop", stops: ["crafts", "herbs"],
+    description: "Explore a workshop, then browse herbs and spices.",
   },
 ];
 
@@ -127,7 +161,7 @@ export const faqs = [
   { question: "Can you bring me back to my hotel?", answer: "Yes. Arrange your return when you plan the ride. For a one-way ride, agree on the drop-off point." },
   { question: "Can I visit more than one place?", answer: "Of course. Pick a few places you like, or ask me for ideas. I'll help you work out a route that fits your time." },
   { question: "How much is the ride?", answer: "It depends on your route, stops, waiting and return trip. Ask for a quote and agree on the details before you go." },
-  { question: "Are tickets, meals and spa treatments included?", answer: "They are paid separately unless your agreed quote clearly says otherwise. Check prices and availability with the attraction, restaurant, shop or spa." },
+  { question: "Are tickets, meals and herbal massages included?", answer: "I only charge for the ride. Tickets, meals, shopping, herbal massages and any other activities are paid separately by you." },
   { question: "Do I have to visit shops or buy anything?", answer: "No. Shops are optional stops, and buying is always your choice. You can ask for a ride with no shopping stops at all." },
   { question: "What if I haven't decided where to go?", answer: "Tell me how much time you have and what you enjoy. I'll help you choose the stops." },
   { question: "Can I bring my family or luggage?", answer: "Tell me how many people are coming and what luggage you have. I'll confirm whether the ride is suitable." },

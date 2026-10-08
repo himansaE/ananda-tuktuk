@@ -6,7 +6,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true;
     let generation = 0;
-    const media = window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)");
+    const media = window.matchMedia("(prefers-reduced-motion: no-preference)");
     let cleanup: (() => void) | undefined;
     const sync = () => {
       cleanup?.();
@@ -17,7 +17,10 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       void Promise.all([import("lenis"), import("@/lib/gsap")]).then(([{ default: Lenis }, { gsap, ScrollTrigger }]) => {
         if (!mounted || request !== generation || !media.matches) return;
         const lenis = new Lenis({
-          duration: 1.45, lerp: 0, smoothWheel: true, syncTouch: false,
+          // Frame-rate-independent damping gives wheel gestures a longer soft
+          // settle. Finger scrolling keeps the platform's own touch momentum.
+          lerp: .065, smoothWheel: true, syncTouch: false,
+          stopInertiaOnNavigate: true,
           prevent: (node) => node.closest("dialog, [data-native-scroll]") !== null,
         });
         lenis.on("scroll", ScrollTrigger.update);

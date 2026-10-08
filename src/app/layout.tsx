@@ -20,7 +20,7 @@ const inter = localFont({
 });
 
 const siteUrl = getSiteUrl();
-const description = "I'm Ananda, your local tuk-tuk driver around Dambulla and Sigiriya. Choose sights, food, crafts and spa stops. I'll pick you up, wait and bring you back.";
+const description = "I'm Ananda, your local tuk-tuk driver around Dambulla and Sigiriya. Choose sights, food, crafts and herbal massage centres. I'll pick you up, wait and bring you back.";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,

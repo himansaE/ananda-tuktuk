@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { CinematicHero } from "@/components/CinematicHero";
-import { MeetAnanda } from "@/components/MeetAnanda";
-import { RideJourney } from "@/components/RideJourney";
-import { HowItWorks } from "@/components/HowItWorks";
-import { Faq } from "@/components/Faq";
-import { BookingCTA } from "@/components/BookingCTA";
+import { LocalNotebook, NotebookEnding } from "@/components/LocalNotebook";
+import { HomeRideStory } from "@/components/HomeRideStory";
 
 export const metadata: Metadata = {
   title: "About me",
@@ -12,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <main id="main-content"><CinematicHero eyebrow="Your tuk-tuk driver" title="I'm Ananda." emphasis="Let's explore." subtitle="I drive around Dambulla and Sigiriya. I can pick you up, wait at your stops and bring you back." backgroundImage="/images/story-red.webp" action="Plan a ride" href="/contact#plan" /><MeetAnanda full /><RideJourney /><HowItWorks /><Faq /><BookingCTA /></main>;
+  return <main id="main-content"><LocalNotebook /><HomeRideStory about /><NotebookEnding /></main>;
 }

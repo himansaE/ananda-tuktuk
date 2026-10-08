@@ -1,26 +1,25 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { useId, useState } from "react";
+import { IconPlus } from "@tabler/icons-react";
 import { faqs } from "@/lib/content";
+import { ScrollTrigger } from "@/lib/gsap";
 import { MotionSection } from "./MotionSection";
 
-function FaqItem({ question, answer, index }: { question: string; answer: string; index: number }) {
-  const [open, setOpen] = useState(false);
-  const content = useRef<HTMLDivElement>(null);
-  function toggle() {
-    const node = content.current;
-    if (!node) return;
-    const next = !open;
-    setOpen(next);
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !CSS.supports("animation-timeline", "view()")) {
-      void import("@/lib/gsap").then(({ ScrollTrigger }) => { if (node.isConnected) ScrollTrigger.refresh(true); });
-    }
-  }
-  return <div className="faq-item"><h3><button id={`faq-question-${index}`} aria-controls={`faq-answer-${index}`} aria-expanded={open} onClick={toggle}>{question}{open ? <IconMinus size={20} aria-hidden="true" className="faq-plus" /> : <IconPlus size={20} aria-hidden="true" className="faq-plus" />}</button></h3><div ref={content} id={`faq-answer-${index}`} aria-labelledby={`faq-question-${index}`} role="region" hidden={!open}><p>{answer}</p></div></div>;
-}
-
 export function Faq({ compact = false }: { compact?: boolean }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const id = useId();
   const questions = compact ? faqs.filter((_, index) => [4, 5, 6, 8].includes(index)) : faqs;
-  return <MotionSection cinema className="faq-section section-space" labelledBy="faq-title"><div className="container-page faq-layout"><div className="section-heading" data-reveal="heading"><h2 id="faq-title" className="type-display">Good to <em>know.</em></h2></div><div className="faq-list">{questions.map((faq, index) => <FaqItem key={faq.question} {...faq} index={index} />)}</div></div></MotionSection>;
+  return <MotionSection cinema className="faq-section section-space" labelledBy={`${id}-title`}><div className="container-page faq-layout"><div className="section-heading" data-reveal="heading"><h2 id={`${id}-title`} className="type-display">Good to <em>know.</em></h2></div><div className="faq-list" data-reveal="answers">{questions.map((faq, index) => {
+    const open = openIndex === index;
+    return <div className="faq-item" key={faq.question} data-open={open}>
+      <h3><button id={`${id}-question-${index}`} aria-controls={`${id}-answer-${index}`} aria-expanded={open} onClick={() => {
+        setOpenIndex(current => current === index ? null : index);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(() => ScrollTrigger.refresh());
+      }}>{faq.question}<IconPlus size={20} aria-hidden="true" className={`faq-plus${open ? " is-open" : ""}`} /></button></h3>
+      <div className="faq-answer" id={`${id}-answer-${index}`} aria-labelledby={`${id}-question-${index}`} aria-hidden={!open} inert={!open} role="region" onTransitionEnd={event => {
+        if (event.target === event.currentTarget && event.propertyName === "grid-template-rows") ScrollTrigger.refresh();
+      }}><div className="faq-answer-inner"><p>{faq.answer}</p></div></div>
+    </div>;
+  })}</div></div></MotionSection>;
 }

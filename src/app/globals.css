@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 @import "./cinema.css";
+@import "./notebook.css";
+@import "./motion-refinements.css";
+@import "./place-gallery.css";
 
 /* The existing red tuk-tuk palette, with two locally hosted font families. */
 
@@ -397,11 +400,9 @@ img {
 .brand-mark {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 36px;
   height: 36px;
-  font-size: 23px;
-  border-radius: 50%;
-  background: var(--color-brand-soft);
 }
 
 .brand-name {
@@ -1071,6 +1072,29 @@ img {
 
 .faq-item [role="region"] {
   overflow: hidden;
+}
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 240ms var(--ease-out), opacity 180ms ease, visibility 240ms;
+}
+
+.faq-answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.faq-item[data-open="true"] .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer, .faq-plus { transition: none; }
 }
 
 .faq-item [role="region"] p {
@@ -2521,7 +2545,7 @@ h1, h2, h3, .experience-title {
 @container (max-width: 16rem) {
 
   .brand-mark {
-    display: none;
+    display: grid;
   }
 }
 

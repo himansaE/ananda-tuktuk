@@ -1,0 +1,38 @@
+/* Opening lines move inside their own masks, preserving the restored hero. */
+.hero-line-mask{display:block;overflow:clip;padding-bottom:.13em;margin-bottom:-.13em}
+.hero-title-line{display:block;transform-origin:left bottom}
+.showcase-background .showcase-scroll-layer{inset:-8% 0}
+@media(prefers-reduced-motion:reduce){.showcase-background .showcase-scroll-layer{inset:0}}
+/* The last row's entrance must not change the page's maximum scroll distance. */
+.site-footer{overflow:clip}
+
+/* The selection action belongs to the photograph, not a stretched text column. */
+.experience-card .experience-media{position:relative;flex-shrink:0}
+.experience-card .experience-open{flex:none}
+.experience-card .experience-text{padding-top:14px}
+.experience-text .experience-title{margin:0}
+.experience-text .experience-summary{margin-bottom:0}
+.experience-section .experience-grid{row-gap:28px}
+.experience-card .add-stop{position:absolute;z-index:2;left:10px;bottom:10px;min-height:44px;min-width:94px;justify-content:center;gap:5px;margin:0;padding:9px 12px;border-radius:999px;background:#faf9f5;color:var(--color-ink);font-size:12px;line-height:1.2;box-shadow:0 2px 8px #15191418;transition:background-color 180ms ease,color 180ms ease,transform 160ms var(--ease-out)}
+.experience-card .add-stop[aria-pressed="true"]{background:var(--color-brand);color:#fff}
+.experience-card .add-stop{height:44px;min-width:0;padding:0 8px;gap:3px;left:8px;bottom:8px}
+.experience-card .photo-open-icon{width:44px;height:44px;right:8px;bottom:8px}
+.experience-card .add-stop-icon{width:18px;height:18px;border:0;background:transparent;position:relative;color:inherit}
+.experience-card .add-stop[aria-pressed="true"] .add-stop-icon{background:transparent;color:inherit}
+.add-stop-icon .stop-plus,.add-stop-icon .stop-check{position:absolute;inset:0;transition:transform 220ms var(--ease-out),opacity 160ms var(--ease-out)}
+.add-stop-icon .stop-check{opacity:0;transform:translateY(4px) scale(.8)}
+.add-stop[aria-pressed="true"] .stop-plus{opacity:0;transform:rotate(90deg) scale(.85)}
+.add-stop[aria-pressed="true"] .stop-check{opacity:1;transform:none}
+.experience-card .add-stop:active{transform:scale(.96);transition-duration:90ms}
+.experience-card .add-stop:focus-visible{outline:2px solid var(--color-brand);outline-offset:4px}
+.experience-card .add-stop:focus-visible,.experience-card .add-stop:focus-visible svg{transition:none}
+@media(hover:hover) and (pointer:fine){.experience-card .add-stop:hover{transform:translateY(-2px)}.experience-card .add-stop:active{transform:scale(.96)}}
+
+.mobile-ridebar{transform:translateY(0);opacity:1;transition:transform 260ms var(--ease-out),opacity 180ms var(--ease-out),visibility 260ms}
+.mobile-ridebar[data-explore-reached="false"]{transform:translateY(calc(100% + 12px));opacity:0;visibility:hidden;pointer-events:none}
+.mobile-ridebar[data-planner-visible="true"],.mobile-ridebar[data-keyboard="true"],body:has(dialog[open]) .mobile-ridebar{opacity:0;transform:translateY(12px);transition:none}
+.ride-count{position:relative;display:inline-block;overflow:clip;height:1.45em;min-width:1ch;vertical-align:bottom;font-variant-numeric:tabular-nums}
+.ride-count>span{display:block}
+.ride-count .ride-count-old{position:absolute;inset:0 auto auto 0;opacity:0}
+.mobile-ridebar strong>span[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.mobile-ridebar,.experience-card .add-stop,.add-stop-icon .stop-plus,.add-stop-icon .stop-check{transition:none}.experience-card .add-stop:hover,.experience-card .add-stop:active{transform:none}}

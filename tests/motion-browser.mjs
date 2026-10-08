@@ -50,6 +50,10 @@ try {
           const layer = document.querySelector(".hero-photo-frame [data-parallax]");
           return image?.complete && image.naturalWidth > 0 && layer?.style.transform ;
         });
+        // Measure the scroll effect after the separate opening camera settles.
+        // Otherwise its temporary scale changes the initial photo bounds.
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForFunction(() => getComputedStyle(document.querySelector("[data-hero-photo]")).transform === "none");
         const offset = () => page.locator(".hero-photo-frame").evaluate(frame => frame.querySelector("img").getBoundingClientRect().top - frame.getBoundingClientRect().top);
         const initial = await offset();
         await page.evaluate(() => scrollTo({ top: 320, behavior: "instant" }));

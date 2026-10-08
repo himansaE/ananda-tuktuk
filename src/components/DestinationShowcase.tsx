@@ -6,11 +6,12 @@ import Link from "next/link";
 import { SectionLink } from "./SectionLink";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { IconArrowUpRight } from "@tabler/icons-react";
+import { useCinemaMotion } from "./useCinemaMotion";
 
 const places = [
-  { name: "Sigiriya", title: ["Discover the ancient", "rock of Sigiriya."], description: "Take your time at the rock. I can wait, then bring you back or on to your next stop.", image: "/images/sigiriya-view.webp", position: "center 42%" },
-  { name: "Dambulla", title: ["Step inside", "Dambulla’s caves."], description: "See the cave temples at your own pace. Add lunch or another stop along the way.", image: "/images/dambulla-cave.webp", position: "center 42%" },
-  { name: "Minneriya", title: ["See Sri Lanka’s", "wild side."], description: "Arrange a ride to your safari meeting point. The jeep and park tickets are separate.", image: "/images/safari.webp", position: "center 38%" },
+  { name: "Sigiriya", title: ["Discover the ancient", "rock of Sigiriya."], description: "Take your time at the rock. I can wait, then bring you back or on to your next stop.", image: "/images/details/showcase-sigiriya.webp", position: "center 42%" },
+  { name: "Dambulla", title: ["Step inside", "Dambulla’s caves."], description: "See the cave temples at your own pace. Add lunch or another stop along the way.", image: "/images/details/showcase-dambulla.webp", position: "center 42%" },
+  { name: "Pidurangala", title: ["Take in the views", "from Pidurangala."], description: "Enjoy the climb and the views at your own pace. I can wait and bring you back to your hotel.", image: "/images/details/showcase-pidurangala.webp", position: "center 42%" },
 ] as const;
 
 type ConnectionNavigator = Navigator & { connection?: EventTarget & { saveData?: boolean } };
@@ -35,7 +36,6 @@ export function DestinationShowcase() {
   const instant = useRef(false);
   const captionInstant = useRef(false);
   const previousCaption = useRef(0);
-  const entrance = useRef<gsap.core.Timeline | null>(null);
   const drifts = useRef<gsap.core.Tween[]>([]);
   const driftingPlace = useRef<number | null>(null);
   const [active, setActive] = useState(0);
@@ -47,32 +47,18 @@ export function DestinationShowcase() {
   const reduce = useSyncExternalStore(subscribeMotion, motionDisabled, () => false);
   const visible = useSyncExternalStore(subscribeVisibility, () => document.visibilityState === "visible", () => true);
   const playing = inView && visible && !focused && !hovered && !reduce;
+  useCinemaMotion(container);
   const { contextSafe } = useGSAP({ scope: container });
   const select = (next: number, keyboard: boolean) => contextSafe(() => {
     instant.current = keyboard;
     captionInstant.current = keyboard;
     if (keyboard) {
-      entrance.current?.progress(1);
       const text = container.current?.querySelectorAll(".showcase-title, .showcase-desc");
       if (text) { gsap.killTweensOf(text); gsap.set(text, { clearProps: "transform,opacity" }); }
       setCaption(next);
     }
     setActive(next);
   })();
-
-  useGSAP(() => {
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      if (motionDisabled()) return;
-      entrance.current = gsap.timeline({ defaults: { ease: "power3.out", clearProps: "transform,opacity" }, scrollTrigger: { trigger: container.current, start: "top 82%", once: true } })
-        .fromTo(".showcase-cards", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65 }, 0)
-        .fromTo(".showcase-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65 }, 0.14)
-        .fromTo(".showcase-desc", { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.24)
-        .fromTo(".showcase-actions", { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 0.32);
-      return () => { entrance.current = null; };
-    });
-    return () => media.revert();
-  }, { scope: container });
 
   useEffect(() => {
     const node = container.current;
@@ -148,20 +134,20 @@ export function DestinationShowcase() {
     return () => window.clearTimeout(timer);
   }, [playing, active, nearby]);
 
-  return <section ref={container} className="destination-showcase" aria-label="Destinations with Ananda" aria-roledescription="carousel"
-    onFocusCapture={event => { setFocused(true); if (event.target.matches(":focus-visible")) entrance.current?.progress(1); }} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+  return <section ref={container} className="destination-showcase" data-reveal-together aria-label="Destinations with Ananda" aria-roledescription="carousel"
+    onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     onPointerEnter={() => { if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) setHovered(true); }} onPointerLeave={() => setHovered(false)}>
-    <div className="showcase-background" aria-hidden="true">
-      {places.map((place, index) => <div key={place.name} className="showcase-slide"><div className="showcase-drift">{(index === 0 || nearby) && <Image src={place.image} alt="" fill sizes="100vw" quality={65} className="cover-image" style={{ objectPosition: place.position }} />}</div></div>)}
-    </div>
+    <div className="showcase-background" aria-hidden="true" data-parallax-frame><div className="showcase-scroll-layer parallax-layer" data-parallax>
+      {places.map((place, index) => <div key={place.name} className="showcase-slide"><div className="showcase-drift">{(index === 0 || nearby) && <Image src={place.image} alt="" fill sizes="100vw" quality={90} className="cover-image" style={{ objectPosition: place.position }} />}</div></div>)}
+    </div></div>
     <div className="showcase-wash" aria-hidden="true" />
     <div className="showcase-content">
-      <div className="showcase-cards" data-reveal="destinations">{places.map((place, index) => <button key={place.name} type="button" className="showcase-card" aria-label={`View ${place.name}`} aria-pressed={active === index} onClick={event => select(index, event.detail === 0)}><span className="showcase-card-photo"><Image src={place.image} alt="" fill sizes="130px" quality={65} className="cover-image" /><span className="showcase-card-label">{place.name}</span></span></button>)}</div>
-      <div className="showcase-text" aria-live="off">
-        <h2 className="showcase-title" data-reveal="title">{places[caption].title[0]}<br />{places[caption].title[1]}</h2>
-        <p className="showcase-desc" data-reveal="description">{places[caption].description}</p>
+      <div className="showcase-cards" data-reveal="destinations">{places.map((place, index) => <button key={place.name} type="button" className="showcase-card" aria-label={`View ${place.name}`} aria-pressed={active === index} onClick={event => select(index, event.detail === 0)}><span className="showcase-card-photo"><Image src={place.image} alt="" fill sizes="130px" quality={90} className="cover-image" /><span className="showcase-card-label">{place.name}</span></span></button>)}</div>
+      <div className="showcase-text" aria-live="off" data-reveal="copy">
+        <h2 className="showcase-title">{places[caption].title[0]}<br />{places[caption].title[1]}</h2>
+        <p className="showcase-desc">{places[caption].description}</p>
       </div>
-      <div className="showcase-actions" data-reveal="actions"><Link href="/tours" className="btn-brand">Explore places<IconArrowUpRight size={18} aria-hidden="true" /></Link><SectionLink href="/contact#plan" className="btn-outline">Plan a ride<IconArrowUpRight size={18} aria-hidden="true" /></SectionLink></div>
+      <div className="showcase-actions" data-reveal="actions"><Link href="/tours" className="btn-brand">Explore places<IconArrowUpRight size={18} aria-hidden="true" /></Link><SectionLink href="/tours#explore" className="btn-outline">Plan a ride<IconArrowUpRight size={18} aria-hidden="true" /></SectionLink></div>
     </div>
   </section>;
 }

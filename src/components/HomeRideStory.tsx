@@ -1,14 +1,20 @@
-import Image from "next/image";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { MotionSection } from "./MotionSection";
 import { SectionLink as Link } from "./SectionLink";
 
-export function HomeRideStory() {
-  return <MotionSection cinema className="cinema-ride section-space cinema-ui" labelledBy="home-ride-title"><div className="container-page cinema-ride-grid">
-    <div className="cinema-ride-photo" data-reveal="photo" data-parallax-frame><div className="parallax-layer" data-parallax><Image src="/images/story-red.webp" alt="A red tuk-tuk beside a Sri Lankan country road" fill sizes="(max-width: 799px) 92vw, 45vw" quality={65} className="cover-image" /></div></div>
-    <div><h2 id="home-ride-title" className="type-display" data-reveal="title">I’ll take care<br />of <em>the ride.</em></h2><p data-reveal="intro">A quick trip or a few stops — tell me what you have in mind.</p>
-      <div className="cinema-ride-line"><span data-ride-progress aria-hidden="true" /><ol className="cinema-ride-steps">{[
-        ["Hotel pickup", "I meet you at the place we agree."], ["Your stops", "I wait while you explore."], ["Back to your hotel", "Or a one-way drop-off, if you prefer."],
-      ].map(([title, text], index) => <li key={title} data-reveal={title}><span aria-hidden="true">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></li>)}</ol></div>
-      <p className="cinema-ride-note" data-reveal="note">We’ll agree the stops, waiting time and price before we go.</p><div className="cinema-actions" data-reveal="actions"><Link href="/contact#plan" className="btn-brand">Plan a ride</Link><Link href="/about" className="text-link">About me</Link></div>
-    </div></div></MotionSection>;
+export function HomeRideStory({ about = false }: { about?: boolean }) {
+  return <MotionSection cinema className="notebook-ride section-space" labelledBy="home-ride-title">
+    <div className="container-page">
+      <div className="notebook-section-heading" data-reveal="heading">
+        <h2 id="home-ride-title" className="type-display">Your ride should<br />fit <em>your day.</em></h2>
+        <p>Tell me where you’re staying, what you’d like to see and how much time you have. I’ll help you work out the stops.</p>
+      </div>
+      <div className="notebook-ledger">
+        <Link href="/tours#explore" data-reveal="short"><span className="notebook-number">01</span><h3>Just need a ride?</h3><p>A hotel, a restaurant or an attraction.</p><IconArrowUpRight size={22} stroke={1.5} aria-hidden="true" /></Link>
+        <Link href="/tours#explore" data-reveal="outing"><span className="notebook-number">02</span><h3>Make a few stops.</h3><p>I can wait while you explore.</p><IconArrowUpRight size={22} stroke={1.5} aria-hidden="true" /></Link>
+        <div data-reveal="choice"><span className="notebook-number">03</span><h3>Keep it your choice.</h3><p>Shops, food or a herbal massage. You choose.</p></div>
+      </div>
+      <div className="notebook-ride-end" data-reveal="ending"><p>We’ll agree on pickup, waiting and the ride back before we go.</p><Link className="text-link" href={about ? "/tours#explore" : "/about"}>{about ? "Let’s plan your ride" : "A little more about me"}<IconArrowUpRight size={18} stroke={1.5} aria-hidden="true" /></Link></div>
+    </div>
+  </MotionSection>;
 }

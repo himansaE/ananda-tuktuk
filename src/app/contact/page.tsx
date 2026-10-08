@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ ride?: string | string[] }> }) {
   const { ride } = await searchParams;
   const initialRide = ride === "short" ? "A short ride" : ride === "outing" ? "A few stops" : undefined;
-  return <main id="main-content"><MotionSection cinema className="cinema-contact cinema-ui" label="Arrange your ride"><div className="container-page"><p className="eyebrow">Tell me what you have in mind</p><h1>Let&apos;s plan <em>a ride.</em></h1><p className="cinema-contact-intro">Share your pickup and stops. I’ll reply on WhatsApp to confirm the plan and price.</p></div></MotionSection><Planner key={initialRide} initialRide={initialRide} /><Faq /></main>;
+  return <main id="main-content"><MotionSection cinema intro className="cinema-contact cinema-ui" label="Arrange your ride"><div className="container-page"><p className="eyebrow" data-intro>Tell me what you have in mind</p><h1 data-intro>Let&apos;s plan <em>a ride.</em></h1><p className="cinema-contact-intro" data-intro>Share your pickup and stops. I’ll reply on WhatsApp to confirm the plan and price.</p></div></MotionSection><Planner key={initialRide} initialRide={initialRide} /><Faq /></main>;
 }
