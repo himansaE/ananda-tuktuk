@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./footer.css";
 import { LenisProvider } from "@/components/LenisProvider";
 import { RideProvider } from "@/components/RideProvider";
 import { NavBar } from "@/components/NavBar";
@@ -20,6 +21,13 @@ const inter = localFont({
 });
 
 const siteUrl = getSiteUrl();
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#F8F6F2",
+};
+
 const description = "I'm Ananda, your local tuk-tuk driver around Dambulla and Sigiriya. Choose sights, food, crafts and herbal massage centres. I'll pick you up, wait and bring you back.";
 
 export const metadata: Metadata = {

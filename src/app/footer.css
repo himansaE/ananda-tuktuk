@@ -1,0 +1,36 @@
+/* Keep mobile planner clearance inside the footer's background. */
+html { background: var(--color-background); }
+body { padding-bottom: 0; }
+
+.site-footer {
+  padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+}
+
+.footer-bottom { padding-block: 1.25rem .875rem; }
+
+.footer-credit {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: .35rem;
+  margin: 0;
+  color: #bebdaf;
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+.footer-credit a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #f6f2e7;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #e4a99c;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 900px) {
+  .site-footer { padding-bottom: 1.75rem; }
+}

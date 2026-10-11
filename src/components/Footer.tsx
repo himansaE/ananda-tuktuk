@@ -33,6 +33,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom" data-reveal="bottom"><p>© {new Date().getFullYear()} Ananda&apos;s Tuk-Tuk</p><p>Hotel pickup · Waiting · Ride back</p></div>
+      <p className="footer-credit"><span>Designed and developed by</span><a href="https://himansa.web.app/" target="_blank" rel="noopener noreferrer">Himansa Wickramasighe</a></p>
     </div>
   </MotionSection>;
 }
