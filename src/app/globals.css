@@ -67,7 +67,7 @@ em {
 
 body {
   margin: 0;
-  padding-bottom: calc(5.375rem + env(safe-area-inset-bottom));
+  padding-bottom: 0;
   font-size: 1rem;
   line-height: 1.65;
   overflow-x: visible;
